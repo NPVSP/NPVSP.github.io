@@ -1,0 +1,1825 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>图灵机</title>
+<style type="text/css">
+/*窗口*/
+body,div,h2{
+	margin:0;
+	padding:0;
+}
+body{
+  background:url(image/bg.jpg);
+  font:12px/1.5 \5fae\8f6f\96c5\9ed1;
+  color:#333;
+  height:100%;
+}
+#drag{
+	position:absolute;
+	z-index:0;
+	top:100px;
+	left:100px;
+	width:45%;
+	height:95%;
+	background:#e9e9e9;
+	border:1px solid #444;
+	border-radius:5px;
+	box-shadow:0 1px 3px 2px #666;
+}
+#drag .title{
+	position:relative;
+	height:27px;
+	margin:0px;
+	background:#9b9b9b;
+	border:5px solid #9b9b9b;
+}
+#drag .title h2{
+	font-size:14px;
+	height:30px;
+	line-height:24px;
+	border-bottom:1px solid #A1B4B0;
+}
+#drag .title div{
+	position:absolute;
+	height:19px;
+	top:2px;
+	right:0; 
+}
+#drag .title a,a.open{
+	float:left;
+	width:21px;
+	height:19px;
+	display:block;
+	margin-left:5px;
+	background:url(image/tool.png) no-repeat;
+}
+a.open{
+	position:absolute;
+	top:10px;
+	left:80%;
+	margin-left:-10px;
+	background-position:0 0;
+}
+a.open:hover{
+	background-position:0 -29px;
+}
+#drag .title a.min{
+	background-position:-29px 0;
+}
+#drag .title a.min:hover{
+	background-position:-29px -29px;
+}
+#drag .title a.max{
+	background-position:-60px 0;
+}
+#drag .title a.max:hover{
+	background-position:-60px -29px;
+}
+#drag .title a.revert{
+	background-position:-149px 0;
+	display:none;
+}
+#drag .title a.revert:hover{
+	background-position:-149px -29px;
+}
+#drag .title a.close{
+	background-position:-89px 0;
+}
+#drag .title a.close:hover{
+	background-position:-89px -29px;
+}
+#drag .content{
+	position:absolute;
+	width:95%;
+	height:95%;
+	margin:5px;
+	z-index:-1;
+}
+#drag .resizeBR{
+	position:absolute;
+	width:14px;
+	height:14px;
+	right:0;
+	bottom:0;
+	overflow:hidden;
+	cursor:nw-resize;
+	background:url(image/resize.png) no-repeat;
+}
+#drag .resizeL,#drag .resizeT,#drag .resizeR,#drag .resizeB,#drag .resizeLT,#drag .resizeTR,#drag .resizeLB{
+	position:absolute;
+	background:#000;
+	overflow:hidden;
+	opacity:0;
+	filter:alpha(opacity=0);
+}
+#drag .resizeL,#drag .resizeR{
+	top:0;
+	width:5px;
+	height:100%;
+	cursor:w-resize;
+}
+#drag .resizeR{
+	right:0;
+}
+#drag .resizeT,#drag .resizeB{
+	width:100%;
+	height:5px;
+	cursor:n-resize;
+}
+#drag .resizeT{
+	top:0;
+}
+#drag .resizeB{
+	bottom:0;
+}
+#drag .resizeLT,#drag .resizeTR,#drag .resizeLB{
+	width:8px;
+	height:8px;
+	background:#FF0;
+}
+#drag .resizeLT{
+	top:0;
+	left:0;
+	cursor:
+	nw-resize;
+}
+#drag .resizeTR{
+	top:0;
+	right:0;
+	cursor:ne-resize;
+}
+#drag .resizeLB{
+	left:0;
+	bottom:0;
+	cursor:ne-resize;
+}
+/*快捷菜单*/
+ul{
+	list-style-type:none;
+}
+#rightMenu{
+	position:absolute;
+	top:-9999px;
+	left:-9999px;
+}
+#rightMenu ul{
+	list-style-type:none;
+	float:left;
+	border:1px solid #979797;
+	background:#f1f1f1  24px 0 repeat-y;
+	padding:2px;
+	box-shadow:2px 2px 2px rgba(0,0,0,.6);
+	border-radius: 5px;
+}
+#rightMenu ul li{
+	list-style-type:none;
+	float:left;
+	clear:both;
+	height:24px;
+	cursor:pointer;
+	line-height:24px;
+	white-space:nowrap;
+	padding:0 30px;
+}
+#rightMenu ul li.sub{
+	background-repeat:no-repeat;
+	background-position:right 9px;
+}
+#rightMenu ul li.active{
+	background: #0399d4;
+	border-radius:3px;
+	border:1px solid #aecff7;
+	height:22px;
+	line-height:22px;
+	background-position:right -8px;
+	padding:0 29px;
+}
+#rightMenu ul ul{
+	display:none;
+	position:absolute;
+}
+/*菜单*/
+#nav {
+  margin: 0;
+  padding: 0px 0px 0;
+  line-height: 100%;
+  border-radius: 5px;
+
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+
+  background: #e9e9e9; /* for non-css3 browsers */
+  filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f3f3f3', endColorstr='#cbcbcb'); /* for IE */
+  background: -webkit-gradient(linear, left top, left bottom, from(#f3f3f3), to(#cbcbcb)); /* for webkit browsers */
+  background: -moz-linear-gradient(top,  #f3f3f3,  #cbcbcb); /* for firefox 3.6+ */
+
+  border: solid 1px #6d6d6d;
+}
+#nav li {
+  margin: 0 5px;
+  padding: 0 0 8px;
+  float: left;
+  position: relative;
+  list-style: none;
+}
+/* main level link */
+#nav a {
+  font-weight: bold;
+  color: #444;
+  text-decoration: none;
+  display: block;
+  padding:  8px 20px;
+  margin: 0;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+}
+/* main level link hover */
+ #nav li:hover > a {
+  background: #d1d1d1; /* for non-css3 browsers */
+  filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ebebeb', endColorstr='#a1a1a1'); /* for IE */
+  background: -webkit-gradient(linear, left top, left bottom, from(#ebebeb), to(#a1a1a1)); /* for webkit browsers */
+  background: -moz-linear-gradient(top,  #ebebeb,  #a1a1a1); /* for firefox 3.6+ */
+
+  color: #444;
+  border-top: solid 1px #f8f8f8;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+  -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .8);
+}
+/* sub levels link hover */
+#nav ul li:hover a, #nav li:hover li a {
+  background: none;
+  border: none;
+  color: #666;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+}
+#nav ul a:hover {
+  background: #0399d4 !important; /* for non-css3 browsers */
+  filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#04acec', endColorstr='#0186ba'); /* for IE */
+  background: -webkit-gradient(linear, left top, left bottom, from(#04acec), to(#0186ba)) !important; /* for webkit browsers */
+  background: -moz-linear-gradient(top,  #04acec,  #0186ba) !important; /* for firefox 3.6+ */
+
+  color: #fff !important;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, .1);
+}
+/* level 2 list */
+#nav ul {
+  background: #ddd; /* for non-css3 browsers */
+  filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#cfcfcf'); /* for IE */
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#cfcfcf)); /* for webkit browsers */
+  background: -moz-linear-gradient(top,  #fff,  #cfcfcf); /* for firefox 3.6+ */
+
+  display: none;
+  margin: 0;
+  padding: 0;
+  width: 185px;
+  position: absolute;
+  top: 35px;
+  left: 0;
+  border: solid 1px #b4b4b4;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+}
+/* dropdown */
+#nav li:hover > ul {
+  display: block;
+}
+#nav ul li {
+  float: none;
+  margin: 0;
+  padding: 0;
+}
+#nav ul a {
+  font-weight: normal;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, .9);
+}
+/* level 3+ list */
+#nav ul ul {
+  left: 181px;
+  top: -3px;
+}
+/* rounded corners for first and last child */
+#nav ul li:first-child > a {
+  -webkit-border-top-left-radius: 9px;
+  -moz-border-radius-topleft: 9px;
+  -webkit-border-top-right-radius: 9px;
+  -moz-border-radius-topright: 9px;
+}
+#nav ul li:last-child > a {
+  -webkit-border-bottom-left-radius: 9px;
+  -moz-border-radius-bottomleft: 9px;
+  -webkit-border-bottom-right-radius: 9px;
+  -moz-border-radius-bottomright: 9px;
+}
+/* clearfix */
+#nav:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+#nav {
+  display: inline-block;
+}
+html[xmlns] #nav {
+  display: block;
+}
+* html #nav {
+  height: 1%;
+}
+/*覆盖层*/
+.myd{  
+	filter: Alpha(Opacity=50) /* for IE */
+	background-color: rgba(0, 0, 0, 0.5); /*for FF*/
+	height: 100%;  
+	left: 0%;  
+	right: 0%;  
+	width: 100%;  
+	position: absolute;  
+	z-index: 10000;  
+}   
+</style>
+<script language='javascript' src="DTMParser.js"></script>
+<script type="text/javascript">
+var dragMinWidth = 250;//窗口最小宽度
+var dragMinHeight = 124;//窗口最小高度
+var winWidth=0;//记录浏览器窗口宽度
+var winHeight=0;//记录浏览器窗口高度
+var twincnt = 4;//窗口总数
+var currentlevel = 5;//当前叠放位置，用来实现窗口最小化时叠放次序
+var isComplie=0;//判断是否编译成功0为没有编译成功，1为编译成功
+var isInput=0;//判断是否是输入状态
+var isContent=0;//判断是否是文本输入
+var interal;//定时器标志
+var intertime=1000;//定时时间
+var isShowAdjust=1;//显示标志
+var input="";//输入
+var isTran=0;//判断是哪一种类图灵机
+var isTran1=0;
+var isTran2=0;
+var isTran3=0;
+var isTranErr=0;
+var obrec=new Array();
+var parsertime;//编译时间
+/*-------------------------- +
+  获取id, class, tagName
++-------------------------- */
+var get = {
+  byId: function(id) {
+    return typeof id === "string" ? document.getElementById(id) : id
+  },
+  byClass: function(sClass, oParent) {
+    var aClass = [];
+    var reClass = new RegExp("(^| )" + sClass + "( |$)");
+    var aElem = this.byTagName("*", oParent);
+    for (var i = 0; i < aElem.length; i++) reClass.test(aElem[i].className) && aClass.push(aElem[i]);
+    return aClass
+  },
+  byTagName: function(elem, obj) {
+    return (obj || document).getElementsByTagName(elem)
+  }
+};
+/*-------------------------- +
+  拖拽函数
+ +-------------------------- */
+function drag(oDrag, handle, resizeop)
+{
+  var disX = dixY = 0;
+  var oMin = get.byClass("min", oDrag)[0];
+  var oMax = get.byClass("max", oDrag)[0];
+  var oRevert = get.byClass("revert", oDrag)[0];
+  var oClose = get.byClass("close", oDrag)[0];
+  var oContent = get.byClass("content", oDrag)[0];
+  handle = handle || oDrag;
+  handle.style.cursor = "move";
+  handle.onmousedown = function (event)
+  {
+    var event = event || window.event;
+    disX = event.clientX - oDrag.offsetLeft;
+    disY = event.clientY - oDrag.offsetTop;
+    document.onmousemove = function (event)
+    {
+      var event = event || window.event;
+      var iL = event.clientX - disX;
+      var iT = event.clientY - disY;
+      var maxL = document.documentElement.clientWidth - oDrag.offsetWidth;
+      var maxT = document.documentElement.clientHeight - oDrag.offsetHeight;
+      iL <= 0 && (iL = 0);
+      iT <= 0 && (iT = 0);
+      iL >= maxL && (iL = maxL);
+      iT >= maxT && (iT = maxT);
+      oDrag.style.left = iL + "px";
+      oDrag.style.top = iT + "px";
+      return false
+    };
+    document.onmouseup = function ()
+    {
+      document.onmousemove = null;
+      document.onmouseup = null;
+      this.releaseCapture && this.releaseCapture()
+    };
+    this.setCapture && this.setCapture();
+    return false
+  };  
+  //最大化按钮
+  if(undefined!=oMax){
+	  oMax.onclick = function ()
+	  {
+	    
+			var o = document.getElementById("winbd");	
+			var oo = get.byClass("open", o);
+			var od = get.byClass("win", o);
+			for(var i=0; i < od.length; i++){					
+				if(od[i] != oDrag){					
+					if(oo[i].id.lastIndexOf("0")!=oo[i].id.length-1){//非对话框
+						oo[i].style.display = "block";
+						od[i].style.display = "none";
+					}
+				}
+			}
+			oDrag.style.top = oDrag.style.left = 0;
+	    oDrag.style.width = document.documentElement.clientWidth - 2 + "px";
+	    oDrag.style.height = document.documentElement.clientHeight - 2 + "px";
+	    this.style.display = "none";
+	    oRevert.style.display = "block";
+	    oContent.style.width = oDrag.offsetWidth -  oContent.offsetLeft - 15 + "px";
+			oContent.style.height = oDrag.offsetHeight -  oContent.offsetTop - 15 + "px";
+			resizeop();
+	  };
+	  //阻止冒泡
+	  oMax.onmousedown = function (event)
+	  {
+	    this.onfocus = function () {this.blur()};
+	    (event || window.event).cancelBubble = true 
+	  };
+	}
+
+  //还原按钮
+  if(undefined!=oRevert){
+	  oRevert.onclick = function ()
+	  {
+	  	if(undefined!=oMax){
+		    oMax.style.display = "block";
+		  }
+			oDrag.style.width = document.documentElement.clientWidth * 0.45 + "px";
+			oDrag.style.height = document.documentElement.clientHeight * 0.95 + "px";
+	    oDrag.style.left = document.documentElement.clientWidth  / 2 + "px";
+			oDrag.style.top =  "10px";
+			oContent.style.width = oDrag.offsetWidth -  oContent.offsetLeft - 15 + "px";
+			oContent.style.height = oDrag.offsetHeight -  oContent.offsetTop - 15 + "px";
+	    this.style.display = "none";  
+	    resizeop();
+	  };
+	}
+
+  //最小化按钮
+  if(undefined!=oMin){
+	  oMin.onclick = function ()
+	  {
+	    oDrag.style.display = "none";
+			var o = document.getElementById("winbd");
+			var oo = get.byClass("open", o);
+			var od = get.byClass("win", o);
+			for(var i=0; i < od.length; i++){
+				if(od[i] == oDrag){
+					oo[i].style.display = "block";
+					oo[i].style.zIndex = currentlevel;
+					currentlevel++;
+				}
+			}
+			resizeop();
+	  };
+	  //阻止冒泡
+	  oMin.onmousedown = function (event)
+	  {
+	    this.onfocus = function () {this.blur()};
+	    (event || window.event).cancelBubble = true 
+	  };
+	}
+	
+	//关闭按钮
+	if(undefined!=oClose){
+	  oClose.onclick = function ()
+	  {
+	    oDrag.style.display = "none";
+	    var o = document.getElementById("winbd");
+			var oo = get.byClass("open", o);
+			var od = get.byClass("win", o);
+			for(var i=0; i < od.length; i++){
+				document.getElementById("md").style.display="none";
+				isInput=0;
+				if(od[i] == oDrag){
+					if(oo[i].id.lastIndexOf("0")!=oo[i].id.length-1){//非对话框
+						oo[i].style.display = "block";
+						oo[i].style.zIndex = currentlevel;
+						currentlevel++;
+					}
+				}
+			}
+			resizeop();
+	  };
+	  //阻止冒泡
+	  oClose.onmousedown = function (event)
+	  {
+	    this.onfocus = function () {this.blur()};
+	    (event || window.event).cancelBubble = true 
+	  };
+	}
+  //自定义右键菜单
+  oDrag.oncontextmenu = function (event)
+  {
+    //窗口置于最前面
+    var o = document.getElementById("winbd");
+    var od = get.byClass("win", o);
+    var oo = get.byClass("open", o);
+    for(var i=0; i < od.length; i++){
+			od[i].style.zIndex--;
+			if(od[i] == oDrag){
+				if(oo[i].id.lastIndexOf("0")!=oo[i].id.length-1){//非对话框
+					oDrag.style.zIndex=twincnt;
+				}else{
+					oDrag.style.zIndex=currentlevel+1;
+				}
+			}
+    }
+    return false;
+  };
+  
+  //点击隐藏菜单
+  oDrag.onclick = function ()
+  {
+		//窗口置于最前面
+		var o = document.getElementById("winbd");
+		var od = get.byClass("win", o);
+		var oo = get.byClass("open", o);
+		for(var i=0; i < od.length; i++){
+			od[i].style.zIndex--;
+			if(od[i] == oDrag){
+				if(oo[i].id.lastIndexOf("0")!=oo[i].id.length-1){//非对话框
+					oDrag.style.zIndex=twincnt;
+				}else{
+					oDrag.style.zIndex=currentlevel+1;
+				}
+			}
+		}
+  };
+}
+
+/*-------------------------- +
+  改变大小函数
+ +-------------------------- */
+function resize(oParent, handle, isLeft, isTop, lockX, lockY, ism, resizeop)
+{
+  handle.onmousedown = function (event)
+  {
+    var event = event || window.event;
+    var disX = event.clientX - handle.offsetLeft;
+    var disY = event.clientY - handle.offsetTop;  
+    var iParentTop = oParent.offsetTop;
+    var iParentLeft = oParent.offsetLeft;
+    var iParentWidth = oParent.offsetWidth;
+    var iParentHeight = oParent.offsetHeight;
+		var oContent = get.byClass("content", oParent)[0];
+		
+    document.onmousemove = function (event)
+    {
+	    	if(ism==1){
+					oContent.style.width = oParent.offsetWidth -  oContent.offsetLeft - 15 + "px";
+					oContent.style.height = oParent.offsetHeight -  oContent.offsetTop - 15 + "px";
+		      var event = event || window.event;
+		      var iL = event.clientX - disX;
+		      var iT = event.clientY - disY;
+		      var maxW = document.documentElement.clientWidth - oParent.offsetLeft - 2;
+		      var maxH = document.documentElement.clientHeight - oParent.offsetTop - 2;         
+					var iW = isLeft ? iParentWidth - iL : handle.offsetWidth + iL;
+		      var iH = isTop ? iParentHeight - iT : handle.offsetHeight + iT;
+		      isLeft && (oParent.style.left = iParentLeft + iL + "px");
+		      isTop && (oParent.style.top = iParentTop + iT + "px");
+		      iW < dragMinWidth && (iW = dragMinWidth);
+		      iW > maxW && (iW = maxW);
+		      lockX || (oParent.style.width = iW + "px");
+		      iH < dragMinHeight && (iH = dragMinHeight);
+		      iH > maxH && (iH = maxH);
+		      lockY || (oParent.style.height = iH + "px");
+		      if((isLeft && iW == dragMinWidth) || (isTop && iH == dragMinHeight)) document.onmousemove = null;
+		      resizeop();
+	    }
+      return false; 
+    };
+
+    document.onmouseup = function ()
+    {
+    	if(ism==1){
+				oContent.style.width = oParent.offsetWidth -  oContent.offsetLeft - 15 + "px";
+				oContent.style.height = oParent.offsetHeight -  oContent.offsetTop - 15 + "px";
+	      document.onmousemove = null;
+	      document.onmouseup = null;
+	    }
+    };
+    return false;
+  }
+};
+/*-------------------------- +
+  右键菜单函数
+ +-------------------------- */
+var getOffset = {
+  top: function (obj) {
+    return obj.offsetTop + (obj.offsetParent ? arguments.callee(obj.offsetParent) : 0)
+  },
+  left: function (obj) {
+    return obj.offsetLeft + (obj.offsetParent ? arguments.callee(obj.offsetParent) : 0)
+  } 
+};
+
+function popMenu(oDrag, oMenu)
+{
+  var aUl = oMenu.getElementsByTagName("ul");
+  var aLi = oMenu.getElementsByTagName("li");
+  var showTimer = hideTimer = null;
+  var i = 0;
+  var maxWidth = maxHeight = 0;
+  var aDoc = [oDrag.offsetWidth, oDrag.offsetHeight];
+  
+  oMenu.style.display = "none";
+  
+  for (i = 0; i < aLi.length; i++)
+  {
+    //为含有子菜单的li加上箭头
+    aLi[i].getElementsByTagName("ul")[0] && (aLi[i].className = "sub");
+    
+    //鼠标移入
+    aLi[i].onmouseover = function ()
+    {
+      var oThis = this;
+      var oUl = oThis.getElementsByTagName("ul");
+      
+      //鼠标移入样式
+      oThis.className += " active";     
+      
+      //显示子菜单
+      if (oUl[0])
+      {
+        clearTimeout(hideTimer);        
+        showTimer = setTimeout(function ()
+        {
+          for (i = 0; i < oThis.parentNode.children.length; i++)
+          {
+            oThis.parentNode.children[i].getElementsByTagName("ul")[0] &&
+            (oThis.parentNode.children[i].getElementsByTagName("ul")[0].style.display = "none");
+          }
+          oUl[0].style.display = "block";
+          oUl[0].style.top = oThis.offsetTop + "px";
+          oUl[0].style.left = oThis.offsetWidth + "px";
+          setWidth(oUl[0]);
+          
+          //最大显示范围          
+          maxWidth = aDoc[0] - oUl[0].offsetWidth -5;
+          maxHeight = aDoc[1] - oUl[0].offsetHeight - 5;
+          
+          //防止溢出
+          maxWidth < getOffset.left(oUl[0]) && (oUl[0].style.left = -oUl[0].clientWidth + "px");
+          maxHeight < getOffset.top(oUl[0]) && (oUl[0].style.top = -oUl[0].clientHeight + oThis.offsetTop + oThis.clientHeight + "px")
+        },300);
+      }     
+    };
+      
+    //鼠标移出  
+    aLi[i].onmouseout = function ()
+    {
+      var oThis = this;
+      var oUl = oThis.getElementsByTagName("ul");
+      //鼠标移出样式
+      oThis.className = oThis.className.replace(/\s?active/,"");
+      
+      clearTimeout(showTimer);
+      hideTimer = setTimeout(function ()
+      {
+        for (var i = 0; i < oThis.parentNode.children.length; i++)
+        {
+          oThis.parentNode.children[i].getElementsByTagName("ul")[0] &&
+          (oThis.parentNode.children[i].getElementsByTagName("ul")[0].style.display = "none");
+        }
+      },300);
+    };
+  } 
+  
+  
+  //自定义右键菜单
+  oDrag.oncontextmenu = function (event)
+  {
+		//窗口置于最前面
+		var o = document.getElementById("winbd");
+		var od = get.byClass("win", o);
+		for(var i=0; i < od.length; i++){
+			od[i].style.zIndex--;
+			if(od[i] == oDrag)oDrag.style.zIndex=twincnt;
+		}
+
+		//右键菜单
+    var event = event || window.event;
+    oMenu.style.display = "block";
+    oMenu.style.top = event.clientY - oDrag.offsetTop+ "px";
+    oMenu.style.left = event.clientX - oDrag.offsetLeft + "px";
+    setWidth(aUl[0]);
+    
+    //最大显示范围
+		aDoc = [oDrag.offsetWidth, oDrag.offsetHeight];
+    maxWidth = aDoc[0] - oMenu.offsetWidth - 5;
+    maxHeight = aDoc[1] - oMenu.offsetHeight - 5;
+    
+    //防止菜单溢出
+    oMenu.offsetTop > maxHeight && (oMenu.style.top = maxHeight + "px");
+    oMenu.offsetLeft > maxWidth && (oMenu.style.left = maxWidth + "px");
+    return false;
+  };
+  
+  //点击隐藏菜单
+  oDrag.onclick = function ()
+  {
+    oMenu.style.display = "none"  
+	  //窗口置于最前面
+	  var o = document.getElementById("winbd");
+	  var od = get.byClass("win", o);
+	  var max = 0;
+	  for(i=0; i < od.length; i++){
+			od[i].style.zIndex--;
+			if(od[i] == oDrag)oDrag.style.zIndex=twincnt;
+	  }
+  };
+  
+  //取li中最大的宽度, 并赋给同级所有li  
+  function setWidth(obj)
+  {
+    maxWidth = 0;
+    for (var i = 0; i < obj.children.length; i++ )
+    {
+      var oLi = obj.children[i];      
+      var iWidth = oLi.clientWidth - parseInt(oLi.currentStyle ? oLi.currentStyle["paddingLeft"] : getComputedStyle(oLi,null)["paddingLeft"]) * 2
+      if (iWidth > maxWidth) maxWidth = iWidth;
+    }
+    for (var i = 0; i < obj.children.length; i++ ) obj.children[i].style.width = maxWidth + "px";
+  }
+};
+
+
+function init(id, l, t, w, h, ism, resizeop)
+{
+  var o = document.getElementById("window" + id);
+  var oDrag = get.byClass("win", o)[0];
+  var oContent = get.byClass("content", oDrag)[0];
+  var oRightMenu = get.byClass("rightMenu", oDrag)[0];
+  var oMenu = get.byClass("nav", oDrag)[0];
+  var oTitle = get.byClass("title", oDrag)[0];
+  var oL = get.byClass("resizeL", oDrag)[0];
+  var oT = get.byClass("resizeT", oDrag)[0];
+  var oR = get.byClass("resizeR", oDrag)[0];
+  var oB = get.byClass("resizeB", oDrag)[0];
+  var oLT = get.byClass("resizeLT", oDrag)[0];
+  var oTR = get.byClass("resizeTR", oDrag)[0];
+  var oBR = get.byClass("resizeBR", oDrag)[0];
+  var oLB = get.byClass("resizeLB", oDrag)[0];
+  drag(oDrag, oTitle, resizeop);
+  //四角
+  resize(oDrag, oLT, true, true, false, false, ism, resizeop);
+  resize(oDrag, oTR, false, true, false, false, ism, resizeop);
+  resize(oDrag, oBR, false, false, false, false, ism, resizeop);
+  resize(oDrag, oLB, true, false, false, false, ism, resizeop);
+  //四边
+  resize(oDrag, oL, true, false, false, true, ism, resizeop);
+  resize(oDrag, oT, false, true, true, false, ism, resizeop);
+  resize(oDrag, oR, false, false, false, true, ism, resizeop);
+  resize(oDrag, oB, false, false, true, false, ism, resizeop);
+  oDrag.style.width = w + "px";
+  oDrag.style.height = h + "px";
+  oDrag.style.left = l + "px";
+  oDrag.style.top =  t + "px";
+  oDrag.style.zindex = currentlevel - twincnt;
+  if(oRightMenu!=null){
+    popMenu(oDrag, oRightMenu);
+  }
+  oContent.style.width = oDrag.offsetWidth -  oContent.offsetLeft - 15 + "px";
+  oContent.style.height = oDrag.offsetHeight -  oContent.offsetTop - 15 + "px";
+  
+  var oA = document.createElement("a");
+  oA.className = "open";
+  oA.id = "a" + id + "_" + ism;
+  oA.href = "javascript:;";
+  oA.title = "还原";
+  document.body.appendChild(oA);
+  oA.style.display = "none";
+  oA.style.zIndex=currentlevel;
+  currentlevel++;
+  oA.onclick = function ()
+  {
+    this.style.display = "none";
+    var o = document.getElementById("winbd");
+    var od = get.byClass("win", o);
+    for(var i=0; i < od.length; i++)
+    {
+      od[i].style.zIndex--;
+      if(this.id == "a" + (i+1) + "_" + ism ){
+        od[i].style.zIndex=twincnt;
+        od[i].style.display= "block";
+      }
+    }
+    resizeop();
+  };
+  var ob=new Object();
+  obrec.push(ob);
+  ob=new Object();
+  obrec.push(ob);
+  ob=new Object();
+  obrec.push(ob);
+  ob=new Object();
+  obrec.push(ob);
+}
+window.onload = function ()
+{
+  var w = document.documentElement.clientWidth * 0.45;
+  var h = document.documentElement.clientHeight * 0.95;
+  var l = document.documentElement.clientWidth  / 2;
+  var t = 10;
+  winWidth = document.documentElement.clientWidth;
+  winHeight = document.documentElement.clientHeight;
+  //一定要按照布局顺序初始化
+  init(1, l /2, h * 0.4, w, 110, 0, null);
+  init(2, l + 30, t, w, h, 1, DTMDisplay);
+  init(3, l - 50, t, w, h, 1, null);
+  init(4, 10, t, w, h, 1, null);
+  var o = document.getElementById("window1");
+  var oDrag = get.byClass("win", o)[0];
+  oDrag.style.display = "none";   
+  var dc=document.getElementById("DTMcontect");
+  dc.onfocus=function(event)
+  {
+    var o=getSelRowCol(this);
+    document.getElementById("pos").innerHTML ="行："+o.row+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;列："+o.col;
+    isContent=1;
+  }; 
+  dc.onblur=function(event)
+  {
+    isContent=0;
+  }; 
+  dc.onkeydown=dc.onkeyup=dc.onmousedown=dc.onmouseup=function(event)
+  {
+    var o=getSelRowCol(this);
+    document.getElementById("pos").innerHTML ="行："+o.row+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;列："+o.col;
+  }; 
+  
+  function immediately(){ 
+		if("\v"=="v") { 
+			dc.onpropertychange = webChange; 
+		}else{ 
+			dc.addEventListener("input",webChange,false); 
+		} 
+		function webChange(){ 
+			isContent=1;
+			var o=getSelRowCol(this);
+	    document.getElementById("pos").innerHTML ="行："+o.row+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;列："+o.col;
+	    isComplie=0;
+	    document.getElementById("DTMmessage").value=""; 
+			var o = document.getElementById("window2");
+			var oDrag = get.byClass("win", o)[0];
+	  	var oc = get.byClass("content", oDrag)[0];
+	  	var canvas = document.getElementById("DTMshow");
+	    var gi= canvas.getContext("2d");
+	    gi.clearRect(0, 0, (oc.offsetWidth - oc.offsetLeft) * 0.99, (oc.offsetHeight - oc.offsetTop) * 0.99);
+	    window.clearInterval(interal);
+			o = document.getElementById("run");	
+			o.innerHTML = "<strong>运行  (Ctrl + S)</strong>";
+		} 
+	} 
+	immediately();
+  var dm=document.getElementById("DTMmessage");
+  dm.onclick=function(event)
+  {
+  	//if(isComplie==1)return true;//编译成功
+    var o=getSelRowCol(this);
+    var dc=document.getElementById("DTMcontect");
+    var text=this.value;
+    if(text=="")return;
+    var arr=text.split("\n");
+    if(o.row>=arr.length)return;
+    var at=arr[o.row-1].split(" ");
+    var obj=new Object();
+    if("undefined" == at[1] || isNaN(at[1]) || at[1]==""){//判断是否是数字
+      obj.row=1;
+      obj.col=0;
+    }else{
+    	obj.row=parseInt(at[1]);
+    	if("undefined" == at[3] || isNaN(at[3]) || at[3]==""){
+    		obj.col=1;
+    	}else{
+	      obj.col=parseInt(at[3]);
+	    }
+    }
+    var sel=getSelPos(dc,obj);      
+    dc.selectionStart=sel;
+    dc.selectionEnd=sel;
+    dc.focus();
+  }
+  var di=document.getElementById("DTMinput");
+  di.onkeydown=function(event)
+  {
+  	var e = event || window.event || arguments.callee.caller.arguments[0];
+		if( e.keyCode == 13 ){//Enter输入
+			document.getElementById("md").style.display="none";
+			var o = document.getElementById("window1");
+  		var oDrag = get.byClass("win", o)[0];
+			oDrag.style.display = "none";
+			isInput=0;
+			input=document.getElementById("DTMinput").value;
+			var str=DTMInputTran(input);
+			DTMInput(str);
+			DTMDisplay();		
+			return false;
+		}
+		if( e.keyCode == 27 ){//Esc输入
+			document.getElementById("md").style.display="none";
+			var o = document.getElementById("window1");
+  		var oDrag = get.byClass("win", o)[0];
+			oDrag.style.display = "none";
+			isInput=0;
+		}
+  }
+}
+window.onresize = function ()
+{
+	var w = document.documentElement.clientWidth;
+  var h = document.documentElement.clientHeight;
+	var o = document.getElementById("winbd");
+	var oDrag = get.byClass("win", o);
+	var oo = get.byClass("open", o);
+
+	for(var i=0; i < oDrag.length; i++){	
+		var display=oDrag[i].style.display;
+		oDrag[i].style.display="block";
+		if(oo[i].id.lastIndexOf("0")!=oo[i].id.length-1){//非对话框
+			var w1 = oDrag[i].offsetWidth * w / winWidth;
+			if(w1>w-10)w1=w-10;
+			if(w1<dragMinWidth)w1=dragMinWidth;
+			var h1 = oDrag[i].offsetHeight * h / winHeight;
+			if(h1>h-10)h1=h-10;
+			if(h1<dragMinHeight)h1=dragMinHeight;
+		  oDrag[i].style.width = w1 + "px";
+		  oDrag[i].style.height = h1 + "px";
+		  var l1=oDrag[i].offsetLeft * w / winWidth;
+			if(l1>w-10-w1)l1=w-10-w1;
+			if(l1<0)l1=0;
+			var t1=oDrag[i].offsetTop * h / winHeight;
+			if(t1>h-10-h1)t1=h-10-h1;
+			if(t1<0)t1=0;
+		  oDrag[i].style.left = l1 + "px";
+	  	oDrag[i].style.top =  t1 + "px";
+		  
+		  var oContent = get.byClass("content", oDrag[i])[0];
+		  oContent.style.width = oDrag[i].offsetWidth -  oContent.offsetLeft - 15 + "px";
+		  oContent.style.height = oDrag[i].offsetHeight -  oContent.offsetTop - 15 + "px";
+		}else{
+			var w1 = oDrag[i].offsetWidth * w / winWidth;
+			if(w1>w*0.45)w1=w*0.45;
+			if(w1<dragMinWidth)w1=dragMinWidth;
+		  oDrag[i].style.width = w1 + "px";
+		  var l1=oDrag[i].offsetLeft * w / winWidth;
+			if(l1>w-10-w1)l1=w-10-w1;
+			if(l1<0)l1=0;
+			var t1=oDrag[i].offsetTop * h / winHeight;
+			if(t1>h-10-h1)t1=h-10-h1;
+			if(t1<0)t1=0;
+		  oDrag[i].style.left = l1 + "px";
+	  	oDrag[i].style.top =  t1 + "px";
+		  
+		  var oContent = get.byClass("content", oDrag[i])[0];
+		  oContent.style.width = oDrag[i].offsetWidth -  oContent.offsetLeft - 15 + "px";
+		  oContent.style.height = oDrag[i].offsetHeight -  oContent.offsetTop - 15 + "px";
+		} 
+		oDrag[i].style.display = display; 
+	}
+	winWidth=w;
+	winHeight=h;
+	DTMDisplay();
+}
+window.oncontextmenu = function (event)
+{
+   return false;
+}
+document.onkeydown=function(event)
+{
+	var e = event || window.event || arguments.callee.caller.arguments[0];
+	if(e.keyCode == 116 ){//F5
+		if(isInput==1)return false;//输入状态
+		DTMComplie();
+		DTMDisplay();
+		return false;
+	}
+	if( e.ctrlKey == true && e.keyCode == 83 ){
+		if(isInput==1)return false;//输入状态
+		Run();
+		return false;
+	}
+	if( e.ctrlKey  == true && e.keyCode == 37 ){
+		if(isComplie==0)return false;//没有编译
+		if(isInput==1)return false;//输入状态
+		if(isContent==1)return true;//输入程序状态
+		Pre();
+		return false;
+	}
+	if( e.ctrlKey  == true && e.keyCode == 39 ){
+		if(isComplie==0)return false;//没有编译
+		if(isInput==1)return false;//输入状态
+		if(isContent==1)return true;//输入程序状态
+		Next();
+		return false;
+	}
+	if( e.altKey  == true && e.keyCode == 37 ){
+		if(isComplie==0)return false;//没有编译
+		if(isInput==1)return false;//输入状态
+		if(isContent==1)return true;//输入程序状态
+		if(intertime>100)intertime-=100;
+		window.clearInterval(interal);
+		var o = document.getElementById("run");	
+		o.innerHTML = "<strong>运行  (Ctrl + S)</strong>";
+		DTMDisplay();
+		return false;
+	}
+	if( e.altKey  == true && e.keyCode == 39 ){
+		if(isComplie==0)return false;//没有编译
+		if(isInput==1)return false;//输入状态
+		if(isContent==1)return true;//输入程序状态
+		if(intertime<2000)intertime+=100;
+		window.clearInterval(interal);
+		var o = document.getElementById("run");	
+		o.innerHTML = "<strong>运行  (Ctrl + S)</strong>";
+		DTMDisplay();
+		return false;
+	}
+	if( e.keyCode == 37 ){//left
+		if(isComplie==0)return true;//没有编译
+		if(isInput==1)return true;//输入状态
+		if(isContent==1)return true;//输入程序状态
+		isShowAdjust = 0;
+    for (var key in tape){
+			tape[key].tshow = tape[key].tshow - 5;
+		}
+    DTMDisplay();
+		return false;
+	}
+	if( e.keyCode == 39 ){//right
+		if(isComplie==0)return true;//没有编译
+		if(isInput==1)return true;//输入状态
+		if(isContent==1)return true;//输入程序状态
+		isShowAdjust = 0;
+    for (var key in tape){
+			tape[key].tshow = tape[key].tshow + 5;
+		}
+    DTMDisplay();
+		return false;
+	}
+	if( e.keyCode == 38 ){//up
+		if(isComplie==0)return true;//没有编译
+		if(isInput==1)return false;//输入状态
+		if(isContent==1)return true;//输入程序状态
+		if(tshowstart>0)tshowstart--;
+		DTMDisplay();
+		return false;
+	}
+	if( e.keyCode == 40 ){//down
+		if(isComplie==0)return true;//没有编译
+		if(isInput==1)return false;//输入状态
+		if(isContent==1)return true;//输入程序状态
+		if(tshowstart < Object.keys(tape).length-1)tshowstart++;
+		DTMDisplay();
+		return false;
+	}
+	if( e.keyCode == 35 ){//end 显示所有磁头位置
+		if(isComplie==0)return true;//没有编译
+		if(isInput==1)return true;//输入状态
+		if(isContent==1)return true;//输入程序状态
+		isShowAdjust = 1;
+		DTMDisplay();
+		return false;
+	}
+	if( e.keyCode == 36 ){//home 对齐显示带内容
+		if(isComplie==0)return true;//没有编译
+		if(isInput==1)return true;//输入状态
+		if(isContent==1)return true;//输入程序状态
+		isShowAdjust = 0;
+    for (var key in tape){
+			tape[key].tshow = head[1];
+		}
+		DTMDisplay();
+		return false;
+	}
+	if(e.altKey  == true && e.keyCode == 33 ){//alt+pageup放大寄存器单元格
+		if(isComplie==0)return true;//没有编译
+		if(isInput==1)return false;//输入状态
+		if(isContent==1)return true;//输入程序状态
+		tregisterlength += 1;
+		DTMDisplay();
+		return false;
+	}
+	if(e.altKey  == true && e.keyCode == 34 ){//alt+pagedown缩小寄存器单元格
+		if(isComplie==0)return true;//没有编译
+		if(isInput==1)return false;//输入状态
+		if(isContent==1)return true;//输入程序状态
+		tregisterlength -= 1;
+		DTMDisplay();
+		return false;
+	}
+	if( e.keyCode == 33 ){//pageup 放大带单元格
+		if(isComplie==0)return true;//没有编译
+		if(isInput==1)return false;//输入状态
+		if(isContent==1)return true;//输入程序状态
+		tshowcelllength += 1;
+		DTMDisplay();
+		return false;
+	}
+	if( e.keyCode == 34 ){//pagedown 缩小带单元格
+		if(isComplie==0)return true;//没有编译
+		if(isInput==1)return false;//输入状态
+		if(isContent==1)return true;//输入程序状态
+		tshowcelllength -= 1;
+		DTMDisplay();
+		return false;
+	}
+	if(e.keyCode == 115 ){//F4
+		DTMHelp();
+	}
+	if(e.keyCode == 117 ){//F6
+		if(isComplie==0)return true;//没有编译
+		if(isInput==1)return false;//输入状态
+		if(isContent==1)return true;//输入程序状态
+		tshowstart = 0;
+    tshowcelllength = 50;
+    tregisterlength = 90;
+		DTMDisplay();
+		return false;
+	}
+	if(e.keyCode == 118 ){//F7
+		if(isComplie==0)return true;//没有编译
+		if(isInput==1)return false;//输入状态		
+		DTMTranRecover();
+		return false;
+	}
+	if(e.keyCode == 119 ){//F8
+		if(isComplie==0)return true;//没有编译
+		if(isInput==1)return false;//输入状态
+		DTMTran(1);
+		return false;
+	}
+	if(e.keyCode == 120 ){//F9
+		if(isComplie==0)return true;//没有编译
+		if(isInput==1)return false;//输入状态
+		DTMTran(2);
+		return false;
+	}
+	if(e.keyCode == 121 ){//F10
+		if(isComplie==0)return true;//没有编译
+		if(isInput==1)return false;//输入状态
+		DTMTran(3);
+		return false;
+	}
+	if( e.ctrlKey  == true && e.keyCode == 73 ){//ctrl+i输入
+		if(isInput==1)return false;//输入状态
+		ShowInput();
+		return false;
+	}
+}
+function ShowDTM()//定时显示
+{
+	if(DTMMove() == 1){
+	}else{
+		var o = document.getElementById("run");
+		o.innerHTML = "<strong>运行  (Ctrl + S)</strong>";
+		window.clearInterval(interal);
+	}
+  DTMDisplay();
+}
+
+function Run()//运行
+{
+	if(isTranErr==1)return;//转换错误不显示
+	if(isComplie==1){
+		isShowAdjust = 1;
+		var o = document.getElementById("run");
+		if(o.innerHTML == "<strong>运行  (Ctrl + S)</strong>"){		
+			o.innerHTML = "<strong>停止  (Ctrl + S)</strong>";
+			interal = setInterval(ShowDTM, intertime);
+		}else{
+			o.innerHTML = "<strong>运行  (Ctrl + S)</strong>";
+			window.clearInterval(interal);
+		}
+	}
+}
+function Next()//进一步
+{
+	if(isTranErr==1)return;//转换错误不显示
+	if(isComplie==1){
+		isShowAdjust = 1;
+		DTMMove();
+		DTMDisplay();
+	}
+}
+function Pre()//退一步
+{
+	if(isTranErr==1)return;//转换错误不显示
+	if(isComplie==1){
+		isShowAdjust = 1;
+		var count=0;
+		if(movcount>0)count=movcount-1;
+		var str=DTMInputTran(input);
+		DTMInput(str);
+		for(var i=0;i<count;i++){
+			DTMMove();
+		}
+		DTMDisplay();
+	}
+}
+//输入
+function ShowInput()
+{
+	if(isTranErr==1)return;//转换错误不显示
+	if(isComplie==1){
+		var o = document.getElementById("window1");
+  	var oDrag = get.byClass("win", o)[0];
+  	oDrag.style.zIndex=currentlevel+1;
+    oDrag.style.display= "block";
+		document.getElementById("md").style.display="block";      
+		document.getElementById("md").style.zIndex = currentlevel;
+		document.getElementById("DTMinput").value=input;
+		document.getElementById("DTMinput").focus();	
+		o = document.getElementById("run");
+		o.innerHTML = "<strong>运行  (Ctrl + S)</strong>";
+		window.clearInterval(interal);
+		isInput=1;
+  } 
+}
+//图灵机快照显示
+function DTMDisplay()
+{
+	if(isTranErr==1)return;//转换错误不显示
+	if(isComplie==1){
+		var canvas = document.getElementById("DTMshow");
+		var rect = new Object();
+		var o = document.getElementById("window2");
+		var oDrag = get.byClass("win", o)[0];
+  	var oContent = get.byClass("content", oDrag)[0];
+  	rect.Left = 20;
+		rect.Top = 20;
+		rect.Height = (oContent.offsetHeight - oContent.offsetTop) * 0.99 - rect.Top;
+		rect.Width = (oContent.offsetWidth - oContent.offsetLeft) * 0.99 - rect.Left;
+		
+		canvas.height = rect.Height + rect.Top;
+    canvas.width = rect.Width + rect.Left;
+    canvas.focus();
+		DTMShow(rect,canvas,isShowAdjust);
+		var tn = Object.keys(tape);
+	  var str="";
+	  str+="================机器信息================\n";
+	  str+="带总数："+tn.length+"\n";
+	  str+="寄存器总数："+ Object.keys(register).length+"\n";
+	  str+="字符总数："+ Object.keys(alphabet).length+"\n";
+	  str+="转移函数总数："+ Object.keys(func).length+"\n";
+	  str+="编译时间："+parsertime/1000+"秒\n";
+	  str+="运行时间："+intertime/1000+"秒\n";
+	  
+	  str+="\n================ 状  态 ================\n";
+	  str+="原始输入："+input+"\n";
+	  if(isTran!=0){
+		  str+="转换输入："+DTMInputTran(input)+"\n";
+		}
+	  str+="运行步数: "+movcount+"\n";
+    str+="内存:  输入："+inputmen+"  总数："+maxmem+"\n";
+	  if(func[curdes] == null){
+	  	if(head[0]=="halt"){
+	  		str+= "停机！\n";
+	  	}else{
+	  		str+= "死机！\n";
+	  	}
+	  }else{
+			str+="使用规则："+curdes+" "+curmov+"\n";
+			str+="匹配规则：\n行： "+func[curdes]+"   规则："+curscr+"\n";
+			var darr=curscr.split("~");   
+			var d={};
+			for(var k=1;k<darr.length;k=k+2){
+				d["~"+darr[k]]=descartesset["~"+darr[k]];
+		  }  
+		  var da=Object.keys(d);
+      var nn=1;
+      for(var key in d){
+      	nn *= Object.keys(d[key]).length;
+      }
+      str+= "笛卡尔集匹配数：" + nn;
+      str+= "\n";
+		}
+		document.getElementById("DTMmessage").value=str;
+	}
+}
+//编译运行
+function DTMComplie()
+{
+	parsertime=new Date().getTime();
+  var str=DTMParser(document.getElementById("DTMcontect").value);
+  parsertime=new Date().getTime()-parsertime;
+  document.getElementById("DTMmessage").value=str;
+  input="";
+  var ow;
+  if(str==""){//编译成功
+    ow = document.getElementById("window2");
+    /*for(var key in func){
+    	str+=func[key].num+": "+key+" "+func[key].mov+"\n";
+    }
+    document.getElementById("DTMmessage").value=str;
+    document.getElementById("DTMmessage").focus();*/
+    isComplie=1;
+  }else{
+    ow = document.getElementById("window3");
+    document.getElementById("DTMmessage").focus();
+    isComplie=0;
+  }
+  var oDrag = get.byClass("win", ow)[0];
+  var o = document.getElementById("winbd");
+  var od = get.byClass("win", o);
+  for(var i=0; i < od.length; i++){
+    od[i].style.zIndex--;
+    if(od[i] == oDrag)oDrag.style.zIndex=twincnt;
+  }
+  isTran=0;
+	isTran1=0;
+	isTran2=0;
+	isTran3=0;
+	isTranErr=0;
+}
+//获取光标所在的行列
+function getSelRowCol(dc)
+{     
+  var text=dc.value;
+  var arr = new Array();
+  var n=0;
+  arr.push(n);
+  while(1){
+    n=text.indexOf("\n",n);
+    if(n==-1)break;
+    arr.push(n);
+    n++;
+  }
+  if(text.lastIndexOf("\n")!="\n")arr.push(text.length);
+  var sel=dc.selectionStart;
+  var rowcount;
+  for(rowcount=1;rowcount<arr.length;rowcount++){
+		if(sel<=arr[rowcount])break;
+  }
+  var obj=new Object();
+  obj.row=rowcount;
+  obj.col=sel-arr[rowcount-1];
+  return obj;
+}
+//获取光标位置
+function getSelPos(dc,obj)
+{     
+	var text=dc.value;
+	var arr = new Array();
+	var n=0;
+	arr.push(n);
+	while(1){
+    n=text.indexOf("\n",n);
+    if(n==-1)break;
+    arr.push(n);
+    n++;
+	}
+	if(text.lastIndexOf("\n")!="\n")arr.push(text.length);
+	var sel=arr[obj.row-1]+obj.col
+	return sel;
+}
+//帮助文档
+function help()
+{
+		var str="";
+		str+="命令：";str+="\n";
+		str+="F4:帮助";str+="\n";	
+		str+="F5:编译图灵机";str+="\n";
+		str+="F6:图灵机恢复初始显示";str+="\n";
+		str+="F7:还原为原始图灵机";str+="\n";
+		str+="F8:转换为单边图灵机";str+="\n";
+		str+="F9:转换为01字符图灵机";str+="\n";
+		str+="F10:转换为单带图灵机";str+="\n";
+		str+="Ctrl+i:图灵机输入";str+="\n";
+		str+="Ctrl+s:运行或停止图灵机";str+="\n";
+		str+="Ctrl+left:图灵机运行的上一步";str+="\n";
+		str+="Ctrl+right:图灵机运行的下一步";str+="\n";
+		str+="Alt+left:减少图灵机单步运行间隔";str+="\n";
+		str+="Alt+right:增加图灵机单步运行间隔";str+="\n";
+		str+="left:左边移动图灵机";str+="\n";
+		str+="right:右边移动图灵机";str+="\n";
+		str+="up:上移动图灵机";str+="\n";
+		str+="down:下移动图灵机";str+="\n";
+		str+="Home:以第一条带的第一个单元格对齐图灵机的带";str+="\n";
+		str+="End:显示所有图灵机的磁头";str+="\n";
+		str+="pageup:放大图灵机带单元格";str+="\n";
+		str+="pagedown:缩小图灵机带单元格";str+="\n";
+		str+="Alt+pageup:放大图灵机寄存器单元格";str+="\n";
+		str+="Alt+pagedown:缩小图灵机寄存器单元格";str+="\n";
+		str+="\n";
+		str+="===========================================================\n";
+		str+="图灵机描述格式：";str+="\n";	
+		str+="    图灵机描述以一行为一条语句，可以使用\\\\在行开头作为注释，空行不算描述内容。";str+="\n";
+		str+="每一条语句使用空格作为词语的分隔符。可以使用（空格~~）作为断行符号。";str+="\n";	str+="\n";	
+		str+="    第一部分为图灵机带（1行），语法格式为:";str+="\n";
+		str+="    带名称1 . . . 带名称k ";str+="\n";
+		str+="    说明：带名称之间以空格分隔，不能同名，不能有~ `等特殊符号，";str+="\n";
+		str+="至少要有一条带，默认第一条带为输入带。";str+="\n";str+="\n";		
+		str+="    第二部分为图灵机寄存器状态（1行），语法格式为:";str+="\n";
+		str+="    寄存器状态名称1 . . . 寄存器状态名称r ";str+="\n";
+		str+="    说明：寄存器状态名称之间以空格分隔，不能同名，不能有~ `等特殊符号，";str+="\n";
+		str+="至少要有start（开始）和halt（停机）两种状态。";str+="\n";str+="\n";		
+		str+="    第三部分为图灵机字符表（1行），语法格式为:";str+="\n";
+		str+="    字符1 . . . 字符p ";str+="\n";
+		str+="    说明：字符名称之间以空格分隔，不能同名，不能有~ `等特殊符号，";str+="\n";
+		str+="要有#（空）符号。";str+="\n";	str+="\n";	
+		str+="    第四部分为笛卡尔集合（多行），每行语法格式为:";str+="\n";
+		str+="    ~笛卡尔积名称  集合1 . . .  集合d ";str+="\n";
+		str+="    说明：笛卡尔积和集合名称之间以空格分隔，不能同名，不能有~ `等特殊符号。";str+="\n";str+="\n";	
+		str+="    第五部分为函数集合（多行），每行语法格式为:";str+="\n";
+		str+="    `函数映射名称 ~笛卡尔积名称 映射1 . . . 映射n ";str+="\n";
+		str+="    说明：函数映射、笛卡尔积和集合名称之间以空格分隔，不能同名，不能有~ `等特殊符号，可以在最后使用空字符匹配。";str+="\n";
+		str+="函数映射对应的笛卡尔积一定要在第四部分里面存在，且与映射数量相同。";str+="\n";
+		str+="笛卡尔积和函数映射主要用来匹配第六部分函数的字符串，匹配时分别采用~名称~ `名称`方式，";str+="\n";
+		str+="它们的用法如下：";str+="\n";
+		str+="    //定义";str+="\n";
+		str+="    ~a a1 a2";str+="\n";
+		str+="    ~b b1 b2 b3";str+="\n";
+		str+="    `c ~a c1 c2";str+="\n";
+		str+="    `d ~b d1 d2 d3";str+="\n";
+		str+="笛卡儿积主要用来枚举，字符串~a~&&~b~可以有|a|*|b|=2*3=6个匹配字符串，如下：";str+="\n";
+		str+="    ~a~&&~b~可以匹配：";str+="\n";
+		str+="    a1&&b1";str+="\n";
+		str+="    a1&&b2";str+="\n";
+		str+="    a1&&b3";str+="\n";
+		str+="    a2&&b1";str+="\n";
+		str+="    a2&&b3";str+="\n";
+		str+="    a2&&b3";str+="\n";
+		str+="函数映射主要用来跟随笛卡尔集合，字符串~a~*~a~=`c`有|a|=2个匹配字符串，如下：";str+="\n";
+		str+="    ~a~*~a~=`c`可以匹配：";str+="\n";
+		str+="    a1*a1=d1";str+="\n";
+		str+="    a2*a2=d2";str+="\n";str+="\n";
+		str+="    第六部分为转移函数（多行），每行语法格式为:";str+="\n";
+		str+="    #寄存器状态1 字符串a1 ... 字符串ak 寄存器状态2 字符串b1 ... 字符串bk D1 ... Dk ";str+="\n";
+		str+="    说明：名称之间以空格分隔。寄存器状态必须在寄存器状态集合，字符串必须在字符表中，";str+="\n";
+		str+="Di为磁头移动方向，取值有{R S L}大小写不限，这里k的值为带数，";str+="\n";
+		str+="状态寄存器、字符串和移动方向可以采用笛卡尔积和函数集匹配。";str+="\n";
+		str+="    注意，转移函数的（寄存器状态1 字符串a1 ... 字符串ak）部分称为原状态，";str+="\n";
+		str+="转移函数的（寄存器状态2 字符串b1 ... 字符串bk）部分称为转移状态，";str+="\n";
+		str+="相同的原状态不能对应不同转移状态（确定型图灵机），";str+="\n";
+		str+="所以笛卡尔集合不能单独出现在字符串b1...bk中。";str+="\n";
+		str+="    start为寄存器开始状态，halt为寄存器停止状态，halt状态不能出现在转移函数的原状态。";str+="\n";
+		str+="\n";
+		str+="===========================================================\n";
+		str+="    //一个图灵机实例：判断输入的01字符串是否是回文字符串。";str+="\n";str+="\n";
+		str+="    //PAL(X):x1x2...xn=xn...x2x1";str+="\n";
+		str+="    input work ouput";str+="\n";
+		str+="    start halt ~~";str+="\n";
+		str+="    copy left test";str+="\n";
+		str+="    # 0 1";str+="\n";
+		str+="    ~a 0 1";str+="\n";
+		str+="    `a1 ~a 0 1";str+="\n";
+		str+="    `a2 ~a 1 0";str+="\n";
+		str+="    //空字符串";str+="\n";
+		str+="    #start #   #    # halt #    #    1  S S S";str+="\n";
+		str+="    //copy";str+="\n";
+		str+="    #start ~a~ #    # copy `a1` #    #  S S S";str+="\n";
+		str+="    #copy  ~a~ #    # copy `a1` `a1` #  R R S";str+="\n";
+		str+="    //拷贝结束，左移动";str+="\n";
+		str+="    #copy  #   #    # left #    #    #  L S S";str+="\n";
+		str+="    #left  ~a~ #    # left `a1` #    #  L S S";str+="\n";
+		str+="    //左移动结束，对比开始";str+="\n";
+		str+="    #left  #   #    # test #    #    #  R L S";str+="\n";
+		str+="    #test  ~a~ `a1` # test `a1` `a1` #  R L S";str+="\n";
+		str+="    #test  ~a~ `a2` # halt `a1` `a2` 0  R L S";str+="\n";
+		str+="    #test  #   #    # halt #    #    1  R L S";str+="\n";
+		str+="===========================================================\n";
+		str+="\n\n\n";
+		str+="    ©2016 潘夏福. All rights reserved. ";
+		return str;
+}
+function DTMHelp()
+{
+	var ow = document.getElementById("window3");	
+	var oDrag = get.byClass("win", ow)[0];
+  var o = document.getElementById("winbd");
+  var od = get.byClass("win", o);
+  for(var i=0; i < od.length; i++){
+    od[i].style.zIndex--;
+    if(od[i] == oDrag)oDrag.style.zIndex=twincnt;
+  }
+  var dc = document.getElementById("DTMmessage");
+	dc.value=help();
+  dc.selectionStart=0;
+  dc.selectionEnd=0;
+  dc.focus();
+}
+function DTMRecord()
+{
+	window.clearInterval(interal);
+	var o = document.getElementById("run");	
+	o.innerHTML = "<strong>运行  (Ctrl + S)</strong>";
+	obrec[isTran].tshowstart=tshowstart;
+  obrec[isTran].tshowcelllength=tshowcelllength;
+  obrec[isTran].tregisterlength=tregisterlength;
+  obrec[isTran].movcount=movcount;
+  obrec[isTran].inputmen=inputmen;
+  obrec[isTran].maxmem=maxmem;
+  obrec[isTran].head=head;
+  obrec[isTran].tape=tape;
+  obrec[isTran].alphabet=alphabet;
+  obrec[isTran].register=register;
+  obrec[isTran].func=func;
+  obrec[isTran].descartesset=descartesset;
+  obrec[isTran].map=map;
+  obrec[isTran].curdes=curdes;
+  obrec[isTran].curmov=curmov;
+  obrec[isTran].curscr=curscr;
+  obrec[isTran].row=row;
+  obrec[isTran].dtmsrc=document.getElementById("DTMcontect").value;
+  obrec[isTran].dtmmes=document.getElementById("DTMmessage").value;
+  obrec[isTran].isTranErr=isTranErr;
+}
+function DTMRecover()
+{
+	tshowstart=obrec[isTran].tshowstart;
+  tshowcelllength=obrec[isTran].tshowcelllength;
+  tregisterlength=obrec[isTran].tregisterlength;
+  movcount=obrec[isTran].movcount;
+  inputmen= obrec[isTran].inputmen;
+  maxmem=obrec[isTran].maxmem;
+  head=obrec[isTran].head;
+  tape=obrec[isTran].tape;
+  alphabet=obrec[isTran].alphabet;
+  register=obrec[isTran].register;
+  func=obrec[isTran].func;
+  descartesset=obrec[isTran].descartesset;
+  map=obrec[isTran].map;
+  curdes=obrec[isTran].curdes;
+  curmov=obrec[isTran].curmov;
+  curscr=obrec[isTran].curscr;
+  row=obrec[isTran].row;
+  document.getElementById("DTMcontect").value=obrec[isTran].dtmsrc;
+  document.getElementById("DTMmessage").value=obrec[isTran].dtmmes;
+  isTranErr=obrec[isTran].isTranErr;
+}
+function DTMInputTran(input)
+{
+	var str=input;
+	str = str.replace(/(\s{2,})/g, " ");//消除连续的空格
+  str = str.replace(/(^\s*)|(\s*$)/g, "");//消除前后的空格
+  var si = str.split(" ");
+	if(isTran==1){
+			str ="_";
+			for(var i=0;i<si.length;i++){
+				if(si[i]!="#" && si[i]!=""){
+					str = str + " " + si[i] + "_#";
+				} 
+			}
+	}else if(isTran==2){
+			str="";
+			//对字符表进行编码
+			var rc = Math.ceil(Math.log(Object.keys(obrec[0].alphabet).length)/Math.log(2));
+			var alp = {};
+			var ac = 1;
+			var s1;
+			var s2="";
+			for (var key in obrec[0].alphabet){
+					if(key != "#"){
+							var c = ac;
+							ac++;
+							s1 = "";
+							for(var k = 0; k < rc; k++){
+									s1 = c%2 + " " + s1;
+									c=parseInt(c/2);
+							}
+					}else{
+							s1 = "";
+							for(var k = 0; k < rc; k++){
+									s1 = "# " + s1;
+									s2 = "0 " + s2;
+							}
+					}
+					s1 = s1.substring(0, s1.length - 1);
+					alp[key] = s1;
+			}
+			for(var i=0;i<si.length;i++){
+					if(si[i] == ""){
+							continue;
+					}else{
+							if(alp[si[i]]==null ){
+								str += s2 + "  ";
+							}else{
+								str += alp[si[i]] + "  ";
+							}
+					}
+			}
+	}else if(isTran==3){
+	}else{
+	}
+	return str;
+}
+function DTMTranRecover()
+{
+	DTMRecord();
+	isTran=0;
+	DTMRecover();	
+	DTMDisplay();
+}
+function DTMTran(t)
+{
+	if(isComplie==0)return;//没有编译
+	DTMRecord();
+	isTran=t;
+	
+	var dc = document.getElementById("DTMcontect");
+	if(isTran1==0&&t==1||isTran2==0&&t==2||isTran3==0&&t==3){
+		isTran=0;
+		DTMRecover();	
+		isTran=t;
+		if(t==1){
+			dc.value=DTMTanslate_SigleDirectionTapeDTM();
+			isTran1=1;
+		}else if(t==2){
+			dc.value=DTMTanslate_01DTM();
+			isTran2=1;
+		}else if(t==3){
+			dc.value=DTMTanslate_OneTapeDTM();
+			isTran3=1;
+		}
+		
+		parsertime=new Date().getTime();
+	  var str=DTMParser(dc.value);
+	  parsertime=new Date().getTime()-parsertime;
+	  tregisterlength = 240;
+		if(str!=""){
+			isTranErr=1;
+			document.getElementById("DTMmessage").value=str;
+		}else{
+			var str=DTMInputTran(input);
+		  DTMInput(str);
+		}
+		
+	}else{
+		DTMRecover();
+	}
+	if(isTranErr==1){
+		var o = document.getElementById("window2");
+		var oDrag = get.byClass("win", o)[0];
+  	var oc = get.byClass("content", oDrag)[0];
+  	var canvas = document.getElementById("DTMshow");
+    var gi= canvas.getContext("2d");
+    gi.clearRect(0, 0, (oc.offsetWidth - oc.offsetLeft) * 0.99, (oc.offsetHeight - oc.offsetTop) * 0.99);
+	}else{
+		DTMDisplay();	
+	}
+}
+</script>
+
+</head>
+<script Language="JavaScript" src="traverseDescartesSet.js"></script>
+<script Language="JavaScript" src="DTMParser.js"></script>
+<body id="winbd">
+	<div class="myd" style="display: none" id="md"></div>  
+	<div id="window1" class="container">
+		<div id="drag" class="win">
+			<div class="title">
+				<h2>输入</h2>
+				<div>
+					<a class="close" href="#" title="关闭"></a>
+				</div>
+			</div>
+			<div class="resizeL"></div>
+			<div class="resizeT"></div>
+			<div class="resizeR"></div>
+			<div class="resizeB"></div>
+			<div class="resizeLT"></div>
+			<div class="resizeTR"></div>
+			<div class="resizeBR"></div>
+			<div class="resizeLB"></div>
+			<div class="content">
+				<textarea id="DTMinput" wrap="off" style='position:absolute;overflow:auto;font-size:20px;white-space:nornal; overflow-x:hide; overflow-y:hide;border:1px solid #444;border-radius:5px;box-shadow:0 1px 3px 2px #666;top:30%;width:99.7%;height:55%;resize: none;' ></textarea>
+				<label style='position:absolute;top:-5px;left:0%;font-size:14px;'>使用空格分隔输入！单个#号将识别为空格！</label>
+			</div>
+		</div>
+	</div>
+	<div id="window2" class="container">
+		<div id="drag" class="win">
+			<div class="title1">
+				<div class="title">
+  				<h2>图灵机运行</h2>
+					<div>
+						<a class="min" href="#" title="最小化"></a>
+						<a class="max" href="#" title="最大化"></a>
+						<a class="revert" href="#" title="还原"></a>
+						<a class="close" href="#" title="关闭"></a>
+						</div>
+					</div>
+				</div>
+				<div class="resizeL"></div>
+				<div class="resizeT"></div>
+				<div class="resizeR"></div>
+				<div class="resizeB"></div>
+				<div class="resizeLT"></div>
+				<div class="resizeTR"></div>
+				<div class="resizeBR"></div>
+				<div class="resizeLB"></div>
+
+				<div id="rightMenu" class="rightMenu">
+					<ul>
+						<li id="run" onclick="Run();"><strong>运行  (Ctrl + S)</strong></li>
+						<li onclick="Next();">前一步   (Ctrl + right)</li>
+						<li onclick="Pre();">后一步  (Ctrl + left)</li>
+						<li onclick="ShowInput();">输入  (ctrl + I)</li>
+					</ul>
+        </div>
+				<div class="content">
+					<canvas id="DTMshow" style='width:100%;height:100%;' >
+				</div>
+    	</div>
+	</div>
+	<div id="window3" class="container">
+		<div id="drag" class="win">
+			<div class="title">
+				<h2>消息</h2>
+				<div>
+					<a class="min" href="#" title="最小化"></a>
+          <a class="max" href="#" title="最大化"></a>
+          <a class="revert" href="#" title="还原"></a>
+          <a class="close" href="#" title="关闭"></a>
+        </div>
+			</div>
+			<div class="resizeL"></div>
+	    <div class="resizeT"></div>
+	    <div class="resizeR"></div>
+	    <div class="resizeB"></div>
+	    <div class="resizeLT"></div>
+	    <div class="resizeTR"></div>
+	    <div class="resizeBR"></div>
+	    <div class="resizeLB"></div>
+	    <div class="content">
+	        <textarea id="DTMmessage" wrap="off" readonly="readonly" style='overflow:auto;font-size:20px;white-space:nornal; overflow-x:hide; overflow-y:hide;border:1px solid #444;border-radius:5px;box-shadow:0 1px 3px 2px #666;width:99.7%;height:99%;resize: none;' ></textarea>
+	    </div>
+    </div>
+	</div>
+
+	<div id="window4" class="container">
+		<div id="drag" class="win">
+			<div class="title">
+		    <h2>图灵机程序</h2>
+		    <div>
+		      <a class="min" href="#" title="最小化"></a>
+		      <a class="max" href="#" title="最大化"></a>
+		      <a class="revert" href="#" title="还原"></a>
+		      <a class="close" href="#" title="关闭"></a>
+		    </div>
+			</div>
+			<div class="resizeL"></div>
+			<div class="resizeT"></div>
+			<div class="resizeR"></div>
+			<div class="resizeB"></div>
+			<div class="resizeLT"></div>
+			<div class="resizeTR"></div>
+			<div class="resizeBR"></div>
+			<div class="resizeLB"></div>
+			<div>
+        <ul id="nav" class="nav">
+		      <li><a href="#"onclick="DTMComplie();DTMDisplay();">编译  (F5)</a></li> 
+		      <li><a href="#">转换</a>
+		        <ul>
+		          <li><a href="#" onclick="DTMTran(1);">单边图灵机  (F8)</a></li>
+		          <li><a href="#" onclick="DTMTran(2);">01字符图灵机  (F9)</a></li>
+		          <li><a href="#" onclick="DTMTran(3);">单带图灵机  (F10)</a></li>
+		          <li><a href="#" onclick="DTMTranRecover();">还原  (F7)</a></li>
+		        </ul>
+		      </li>
+		      <li><a href="#" onclick="DTMHelp();">帮助  (F4)</a>
+		      </li>
+		    </ul>
+			</div>
+			<div class="content">
+				<textarea id="DTMcontect" wrap="off" style='overflow:auto;font-size:26px;white-space:nornal; overflow-x:hide; overflow-y:hide;border:1px solid #444;border-radius:5px;box-shadow:0 1px 3px 2px #666;width:99.7%;height:98%;resize: none;' ></textarea>
+				<label id="pos" style='position:absolute;top:99%;left:0%;font-size:12px;'>行：0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;列：0</label>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
