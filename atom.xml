@@ -82,4 +82,56 @@
     
   </entry>
   
+  <entry>
+    <title>博客的建立</title>
+    <link href="http://yoursite.com/2016/03/03/%E5%8D%9A%E5%AE%A2%E7%9A%84%E5%BB%BA%E7%AB%8B/"/>
+    <id>http://yoursite.com/2016/03/03/博客的建立/</id>
+    <published>2016-03-03T14:30:50.000Z</published>
+    <updated>2016-03-09T15:31:05.578Z</updated>
+    
+    <content type="html">&lt;p&gt;欢迎来到本博客，这是我建立的第一个博客！&lt;/p&gt;
+&lt;p&gt;一、博客的环境搭建&lt;br&gt;安装Git（Git-2.6.2-64-bit）&lt;br&gt;安装Node.js（node-v4.2.1-x64）&lt;br&gt;安装MarkdownPad2&lt;/p&gt;
+&lt;p&gt;二、使用hexo管理博客&lt;br&gt;创建一个文件夹NPVSP，然后在此文件夹上使用右键菜单选项Git Bash Here开始安装hexo，输入命令&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ npm install hexo -g&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;如果出现卡住而导致无法正常安装，可以先使用下面的命令指定下载&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ npm --registry http://registry.cnpmjs.org info underscore&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;接着初始化，并完成hexo安装&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo init&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ npm install&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;这时可以使用hexo的命令&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;创建文章&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo n &amp;quot;文章名&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;生成文章&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo g&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;启动本地服务&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo s&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;部署&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo d&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;三、使用新的hexo主题&lt;br&gt;将hexo自带的模板更换为Maupassant，它最初是由Cho大神为Typecho平台设计开发的一套响应式模板，后来&lt;a href=&quot;https://www.haomwei.com/technology/maupassant-hexo.html&quot; title=&quot;屠夫9441&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;屠夫9441&lt;/a&gt;大神将其移植到hexo平台上。&lt;br&gt;安装模板&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1. $ git clone https://github.com/tufu9441/maupassant-hexo.git themes/maupassant&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2. $ npm install hexo-renderer-jade --save&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3. $ npm install hexo-renderer-sass --save&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;并根据&lt;a href=&quot;https://www.haomwei.com/technology/maupassant-hexo.html&quot; title=&quot;屠夫9441&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;屠夫9441&lt;/a&gt;说明，制作favicon.ico和apple-touch-icon.png放在根目录的&lt;code&gt;source&lt;/code&gt;文件夹下。&lt;/p&gt;
+&lt;p&gt;四、修改配置文件&lt;br&gt;在配置hexo的&lt;code&gt;_config.yml&lt;/code&gt;时，其实是有两个的，一个是hexo的基础配置，一个是对主题的配置。在配置的时候，属性和值之间必须有个空格的。&lt;br&gt;在根目录的基础配置&lt;code&gt;_config.yml&lt;/code&gt;文件中设置：&lt;br&gt;&lt;code&gt;title: 夏葡的笔记本&lt;/code&gt;&lt;br&gt;&lt;code&gt;subtitle: 计算机、数学&lt;/code&gt;&lt;br&gt;&lt;code&gt;author: 夏葡&lt;/code&gt;&lt;br&gt;&lt;code&gt;language: zh-CN&lt;/code&gt;&lt;br&gt;由于在博客中有中文，会出现乱码，把配置文件保存成UTF-8文件格式就可以了。&lt;/p&gt;
+&lt;p&gt;五、创建关于页面&lt;/p&gt;
+&lt;p&gt;六、rss订阅&lt;/p&gt;
+&lt;p&gt;七、sitemap &lt;/p&gt;
+&lt;p&gt;八、本地化&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;欢迎来到本博客，这是我建立的第一个博客！&lt;/p&gt;
+&lt;p&gt;一、博客的环境搭建&lt;br&gt;安装Git（Git-2.6.2-64-bit）&lt;br&gt;安装Node.js（node-v4.2.1-x64）&lt;br&gt;安装MarkdownPad2&lt;/p&gt;
+&lt;p&gt;二、使用hexo管理博客&lt;br&gt;创
+    
+    </summary>
+    
+      <category term="Computer" scheme="http://yoursite.com/categories/Computer/"/>
+    
+    
+      <category term="blog" scheme="http://yoursite.com/tags/blog/"/>
+    
+  </entry>
+  
 </feed>

@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>博客的建立 | 夏葡的笔记本</title><link rel="stylesheet" type="text/css" href="/css/normalize.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="/css/pure-min.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="/css/grids-responsive-min.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><!--link(rel='stylesheet', href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css")--><link rel="stylesheet" href="../../../../MyProject/font-awesome/css/font-awesome.min.css"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">博客的建立</h1><a id="logo" href="/.">夏葡的笔记本</a><p class="description">计算机、数学</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">博客的建立</h1><div class="post-meta">Mar 3, 2016<span> | </span><span class="category"><a href="/categories/Computer/">Computer</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><div class="post-content"><p>欢迎来到本博客，这是我建立的第一个博客！</p>
+<p>一、博客的环境搭建<br>安装Git（Git-2.6.2-64-bit）<br>安装Node.js（node-v4.2.1-x64）<br>安装MarkdownPad2</p>
+<p>二、使用hexo管理博客<br>创建一个文件夹NPVSP，然后在此文件夹上使用右键菜单选项Git Bash Here开始安装hexo，输入命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo -g</span><br></pre></td></tr></table></figure></p>
+<p>如果出现卡住而导致无法正常安装，可以先使用下面的命令指定下载<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm --registry http://registry.cnpmjs.org info underscore</span><br></pre></td></tr></table></figure></p>
+<p>接着初始化，并完成hexo安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo init</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install</span><br></pre></td></tr></table></figure>
+<p>这时可以使用hexo的命令</p>
+<ol>
+<li><p>创建文章</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo n &quot;文章名&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>生成文章</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo g</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动本地服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo s</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>部署</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo d</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>三、使用新的hexo主题<br>将hexo自带的模板更换为Maupassant，它最初是由Cho大神为Typecho平台设计开发的一套响应式模板，后来<a href="https://www.haomwei.com/technology/maupassant-hexo.html" title="屠夫9441" target="_blank" rel="external">屠夫9441</a>大神将其移植到hexo平台上。<br>安装模板<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. $ git clone https://github.com/tufu9441/maupassant-hexo.git themes/maupassant</span><br><span class="line">2. $ npm install hexo-renderer-jade --save</span><br><span class="line">3. $ npm install hexo-renderer-sass --save</span><br></pre></td></tr></table></figure></p>
+<p>并根据<a href="https://www.haomwei.com/technology/maupassant-hexo.html" title="屠夫9441" target="_blank" rel="external">屠夫9441</a>说明，制作favicon.ico和apple-touch-icon.png放在根目录的<code>source</code>文件夹下。</p>
+<p>四、修改配置文件<br>在配置hexo的<code>_config.yml</code>时，其实是有两个的，一个是hexo的基础配置，一个是对主题的配置。在配置的时候，属性和值之间必须有个空格的。<br>在根目录的基础配置<code>_config.yml</code>文件中设置：<br><code>title: 夏葡的笔记本</code><br><code>subtitle: 计算机、数学</code><br><code>author: 夏葡</code><br><code>language: zh-CN</code><br>由于在博客中有中文，会出现乱码，把配置文件保存成UTF-8文件格式就可以了。</p>
+<p>五、创建关于页面</p>
+<p>六、rss订阅</p>
+<p>七、sitemap </p>
+<p>八、本地化</p>
+</div><a data-url="http://yoursite.com/2016/03/03/博客的建立/" data-id="cill08jjk0007zoeoimopmct4" class="article-share-link">分享到</a><div class="tags"><a href="/tags/blog/">blog</a></div><div class="post-nav"><a href="/2016/03/06/Deterministic-Turing-Machine-Simulator/" class="pre">Deterministic Turing Machine Simulator（确定型图灵机模拟器）</a></div></div></div></div><div class="pure-u-1-4"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://yoursite.com"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Computer/">Computer</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/DTM/" style="font-size: 15px;">DTM</a> <a href="/tags/blog/" style="font-size: 15px;">blog</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/03/08/aa/">aa</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/08/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/06/Deterministic-Turing-Machine-Simulator/">Deterministic Turing Machine Simulator（确定型图灵机模拟器）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/03/博客的建立/">博客的建立</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">夏葡的笔记本.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/jquery.min.js?v=0.0.0"></script><script type="text/javascript" src="/js/totop.js?v=0.0.0"></script><script type="text/javascript" src="/js/fancybox.pack.js?v=0.0.0"></script><script type="text/javascript" src="/js/jquery.fancybox.js?v=0.0.0"></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script type="text/javascript" src="/js/share.js?v=0.0.0"></script><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div>
+<!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="../../../../MyProject/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+</body></html>
