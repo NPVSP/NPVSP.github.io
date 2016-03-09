@@ -87,7 +87,7 @@
     <link href="http://yoursite.com/2016/03/03/%E5%8D%9A%E5%AE%A2%E7%9A%84%E5%BB%BA%E7%AB%8B/"/>
     <id>http://yoursite.com/2016/03/03/博客的建立/</id>
     <published>2016-03-03T14:30:50.000Z</published>
-    <updated>2016-03-09T15:31:05.578Z</updated>
+    <updated>2016-03-09T15:36:28.362Z</updated>
     
     <content type="html">&lt;p&gt;欢迎来到本博客，这是我建立的第一个博客！&lt;/p&gt;
 &lt;p&gt;一、博客的环境搭建&lt;br&gt;安装Git（Git-2.6.2-64-bit）&lt;br&gt;安装Node.js（node-v4.2.1-x64）&lt;br&gt;安装MarkdownPad2&lt;/p&gt;
@@ -117,6 +117,7 @@
 &lt;p&gt;六、rss订阅&lt;/p&gt;
 &lt;p&gt;七、sitemap &lt;/p&gt;
 &lt;p&gt;八、本地化&lt;/p&gt;
+&lt;p&gt;九、部署到github&lt;/p&gt;
 </content>
     
     <summary type="html">
