@@ -44,7 +44,7 @@
     <link href="http://yoursite.com/2016/03/03/%E5%8D%9A%E5%AE%A2%E7%9A%84%E5%BB%BA%E7%AB%8B/"/>
     <id>http://yoursite.com/2016/03/03/博客的建立/</id>
     <published>2016-03-03T14:30:50.000Z</published>
-    <updated>2016-03-10T10:37:04.583Z</updated>
+    <updated>2016-03-11T01:41:28.536Z</updated>
     
     <content type="html">&lt;p&gt;欢迎来到本博客，这是我建立的第一个博客！&lt;/p&gt;
 &lt;h2 id=&quot;博客的环境搭建&quot;&gt;&lt;a href=&quot;#博客的环境搭建&quot; class=&quot;headerlink&quot; title=&quot;博客的环境搭建&quot;&gt;&lt;/a&gt;博客的环境搭建&lt;/h2&gt;&lt;p&gt;安装Git（Git-2.6.2-64-bit）&lt;br&gt;安装Node.js（node-v4.2.1-x64）&lt;br&gt;安装MarkdownPad2&lt;/p&gt;
@@ -90,6 +90,8 @@
     
     
       <category term="blog" scheme="http://yoursite.com/tags/blog/"/>
+    
+      <category term="hexo" scheme="http://yoursite.com/tags/hexo/"/>
     
   </entry>
   
