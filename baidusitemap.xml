@@ -4,8 +4,28 @@
 
     
   <url>
+    <loc>http://yoursite.com/2016/03/06/Deterministic-Turing-Machine-Simulator/</loc>
+    <lastmod>2016-03-20T14:05:24.902Z</lastmod>
+    <data>
+        <display>
+        <title>Deterministic Turing Machine Simulator（确定型图灵机模拟器）</title>
+        <pubTime>2016-03-06T12:28:40.000Z</pubTime>
+        
+        <tag>DTM</tag>
+         
+         
+           
+             
+              <breadCrumb title="Computer" url="http://yoursite.com/categories/Computer/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2016/03/03/%E5%8D%9A%E5%AE%A2%E7%9A%84%E5%BB%BA%E7%AB%8B/</loc>
-    <lastmod>2016-03-11T01:41:28.536Z</lastmod>
+    <lastmod>2016-03-15T08:10:38.392Z</lastmod>
     <data>
         <display>
         <title>博客的建立</title>
@@ -25,24 +45,4 @@
     </url>
 
     
-    
-  <url>
-    <loc>http://yoursite.com/2016/03/06/Deterministic-Turing-Machine-Simulator/</loc>
-    <lastmod>2016-03-08T16:48:40.754Z</lastmod>
-    <data>
-        <display>
-        <title>Deterministic Turing Machine Simulator（确定型图灵机模拟器）</title>
-        <pubTime>2016-03-06T12:28:40.000Z</pubTime>
-        
-        <tag>DTM</tag>
-         
-         
-           
-             
-              <breadCrumb title="Computer" url="http://yoursite.com/categories/Computer/"/>
-          
-        </display>
-    </data>
-    </url>
-
 </urlset>

@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2016/03/06/Deterministic-Turing-Machine-Simulator/</loc>
+    
+    <lastmod>2016-03-20T14:05:24.902Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2016/03/03/%E5%8D%9A%E5%AE%A2%E7%9A%84%E5%BB%BA%E7%AB%8B/</loc>
     
-    <lastmod>2016-03-11T01:41:28.536Z</lastmod>
+    <lastmod>2016-03-15T08:10:38.392Z</lastmod>
     
   </url>
   
@@ -12,13 +19,6 @@
     <loc>http://yoursite.com/about/index.html</loc>
     
     <lastmod>2016-03-11T01:32:18.302Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2016/03/06/Deterministic-Turing-Machine-Simulator/</loc>
-    
-    <lastmod>2016-03-08T16:48:40.754Z</lastmod>
     
   </url>
   

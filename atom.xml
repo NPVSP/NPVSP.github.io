@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-03-08T16:48:40.754Z</updated>
+  <updated>2016-03-20T14:05:24.902Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,10 +20,171 @@
     <link href="http://yoursite.com/2016/03/06/Deterministic-Turing-Machine-Simulator/"/>
     <id>http://yoursite.com/2016/03/06/Deterministic-Turing-Machine-Simulator/</id>
     <published>2016-03-06T12:28:40.000Z</published>
-    <updated>2016-03-08T16:48:40.754Z</updated>
+    <updated>2016-03-20T14:05:24.902Z</updated>
     
-    <content type="html">&lt;p&gt;  图灵机描述：&lt;br&gt;  $TM \quad M = (\Gamma, \quad  Q, \quad \delta)$&lt;br&gt;  $\Gamma$: the &lt;strong&gt;&lt;em&gt;alphabet&lt;/em&gt;&lt;/strong&gt; of M, a finite set of the symbols that $M$’s tapes can contain.&lt;br&gt;  $Q$: a finite set of the possible states $M$’s &lt;strong&gt;&lt;em&gt;register&lt;/em&gt;&lt;/strong&gt; can be in. $Q$ contains a designated start state ( $\textit{q}_{start}$ ) and a designated halting state ( $\textit{q}_{halt}$ ).&lt;br&gt;  $\delta: \quad Q \times \Gamma^{k-1} \rightarrow Q \times \Gamma^{k-1} \times \{ L,S,R \} ^k$&lt;br&gt;  a function called the &lt;strong&gt;&lt;em&gt;transition&lt;/em&gt;&lt;/strong&gt; function of $M$.&lt;/p&gt;
+    <content type="html">&lt;p&gt;  图灵机描述：&lt;br&gt;  $TM \quad M = (\Gamma, \quad  Q, \quad \delta)$&lt;br&gt;  $\Gamma$: the &lt;strong&gt;&lt;em&gt;alphabet&lt;/em&gt;&lt;/strong&gt; of M, a finite set of the symbols that $M$’s tapes can contain.&lt;br&gt;  $Q$: a finite set of the possible states $M$’s &lt;strong&gt;&lt;em&gt;register&lt;/em&gt;&lt;/strong&gt; can be in. $Q$ contains a designated start state ( $\textit{q}_{start}$ ) and a designated halting state ( $\textit{q}_{halt}$ ).&lt;br&gt;  $\delta: \quad Q \times \Gamma^{k-1} \rightarrow Q \times \Gamma^{k-1} \times \{ L,S,R \} ^k$&lt;br&gt;  a function called the &lt;strong&gt;&lt;em&gt;transition function&lt;/em&gt;&lt;/strong&gt; of $M$.&lt;/p&gt;
 &lt;p&gt;  图灵机模拟器：&lt;br&gt;  &lt;a href=&quot;../../../../MyProject/DTM/DTM.html&quot; target=&quot;_blank&quot;&gt;Deterministic Turing Machine（图灵机）&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;图灵机之间的转换：&lt;br&gt;&lt;strong&gt;双边图灵机（bidirectional TM）转单边图灵机 （unidirectional TM）&lt;/strong&gt;&lt;br&gt;原理：&lt;br&gt;　　碰到 &lt;strong&gt;_&lt;/strong&gt; 符号转向;&lt;br&gt;　　碰到 &lt;strong&gt;#&lt;/strong&gt; 符号转换为 &lt;strong&gt;#_#&lt;/strong&gt;;&lt;br&gt;　　单条语句转换，方向为 &lt;strong&gt;R&lt;/strong&gt; 模拟原来的移动，方向为 &lt;strong&gt;L&lt;/strong&gt; ，反向移动;&lt;/p&gt;
+&lt;span&gt;$$\begin{array}{l  l  l}
+ &amp;amp; \ \textbf{原图灵机：} \qquad\qquad &amp;amp; \textbf{转换后：}\quad\quad\\
+tape &amp;amp;T &amp;amp; TT=\{T\} \\ 
+alphabet &amp;amp; A=\{\Gamma\} &amp;amp; TA=\{\Gamma\_\Gamma, \quad \_  , \quad \# \}\\
+register &amp;amp; R=\{Q\} &amp;amp; TR=\{D_1\_D_2\_ \cdots D_k\_Q, \quad q_{start}, \quad q_{halt}\}\\
+transition function &amp;amp; F=\{\delta\} &amp;amp; TF=\{\delta&amp;apos;\}
+\\\\
+\end{array}
+\\ 
+
+\begin{array}{l }
+其中D_i = \{r, \quad l\}\quad (i=1 , \quad 2 , \quad  \cdots , \quad k)  \\
+k = |T|为图灵机的带数 \\\\
+\delta:\quad
+q \quad a_1 \quad a_2 \quad \cdots \quad a_k \quad \rightarrow \quad q&amp;apos; \quad b_1 \quad b_2 \quad \cdots \quad b_k \quad d_1 \quad d_2 \quad \cdots \quad d_k \\
+转换为\\
+\delta&amp;apos;:\quad
+Dr_1\_Dr_2\_\cdots\_Dr_k\_q \quad Ta_1 \quad Ta_2 \quad \cdots \quad Ta_k \quad \rightarrow \quad 
+TQ \quad Tb_1 \quad Tb_2 \quad \cdots \quad Tb_k \quad Td_1 \quad Td_2 \quad \cdots \quad Td_k\\
+语句转换：\\
+Dr_i=\{r,\quad l\} \quad i=1,\quad 2, \quad\cdots , \quad k \\
+TQ=\left \{ 
+\begin{array}{l} 
+Dr_1\_Dr_2\_\cdots\_Dr_k\_q&amp;apos; \qquad  \\ 
+q_{halt} \qquad 
+\end{array} 
+当
+\begin{array}{l}   \qquad q&amp;apos; \neq q_{halt}\\ 
+ \qquad q&amp;apos; = q_{halt}
+\end{array} 
+\right . \\
+Ta_i= \left \{ 
+\begin{array}{l} 
+a_i\_c_i   \\ 
+c_i\_a_i
+\end{array} 
+\qquad 当 \qquad 
+\begin{array}{l}   
+Dr_i=r\\ 
+Dr_i=l
+\end{array} 
+\right .  
+\qquad 其中 \quad c_i=\{A\}
+\\
+Tb_i= \left \{ 
+\begin{array}{l} 
+b_i\_c_i  \\ 
+c_i\_b_i 
+\end{array} 
+\qquad 当 \qquad 
+\begin{array}{l}   
+Dr_i=r\\ 
+Dr_i=l
+\end{array} 
+\right . \\
+Td_i= \left \{ 
+\begin{array}{l} 
+d_i  \\ 
+\overline{d}_i
+\end{array} 
+\qquad 当 \qquad 
+\begin{array}{l}   
+Dr_i=r\\ 
+Dr_i=l
+\end{array} 
+\right .
+\qquad 其中 \quad 
+\overline{d}_i= \left \{ 
+\begin{array}{l} 
+l  \\ 
+s \\
+r
+\end{array} 
+\qquad 当 \qquad 
+\begin{array}{l}   
+d_i=r\\ 
+d_i=s\\ 
+d_i=l
+\end{array} 
+\right .
+\\注意：\\
+生成的语句数目=\prod\limits_{i=1}^k|Dr_i| \cdot \prod\limits_{i=1}^k|Ta_i| \approx 2^kA^k
+
+\\ \\
+\\相关的\_或者\#符号转换函数：\\
+Dr_i=\{r,\quad l\} \quad i=1,\quad 2, \quad\cdots , \quad k \\
+TQ=\left \{ 
+\begin{array}{l} 
+Dr_1&amp;apos;\_Dr_2&amp;apos;\_\cdots\_Dr_k&amp;apos;\_q&amp;apos; \qquad  \\ 
+q_{halt} \qquad 
+\end{array} 
+当
+\begin{array}{l}   \qquad q&amp;apos; \neq q_{halt}\\ 
+ \qquad q&amp;apos; = q_{halt}
+\end{array} 
+\right . \\
+
+Ta_i= \left \{ 
+\begin{array}{l} 
+\_  \\ 
+\#  \\
+ta_i
+\end{array} 
+\right . 
+\quad  对应\rightarrow \quad  
+Tb_i= \left \{  
+\begin{array}{l}   
+\_\\ 
+\#\_\# \\ 
+ta_i
+\end{array} 
+\right . 
+\quad  对应\rightarrow \quad  
+Td_i= \left \{ 
+\begin{array}{l}   
+r\\ 
+s \\ 
+s
+\end{array} 
+\right . 
+\quad  对应\rightarrow \quad  
+Dr_i&amp;apos;= \left \{ 
+\begin{array}{l}   
+\overline{D}r_i \\ 
+Dr_i\\ 
+Dr_i
+\end{array} 
+\right . \\
+其中
+ta_i= \left \{ 
+\begin{array}{l} 
+a_i\_c_i  \\ 
+c_i\_a_i 
+\end{array} 
+\qquad 当 \qquad 
+\begin{array}{l}   
+Dr_i=r\\ 
+Dr_i=l
+\end{array} 
+\right . \qquad 其中 \quad c_i=\{A\}
+\\
+\overline{D}r_i = \left \{ 
+\begin{array}{l} 
+l  \\ 
+r 
+\end{array} 
+\qquad 当 \qquad 
+\begin{array}{l}   
+Dr_i=r\\ 
+Dr_i=l
+\end{array} 
+\right . \\
+注意：\\
+(1)Ta_i不能全部取ta_i\\
+(2)如果与前面的语句相同，则删除\\
+(3)生成的语句数目=\prod\limits_{i=1}^k|Dr_i| \cdot (\prod\limits_{i=1}^k|Ta_i| -1 ) \approx 2^kA^k
+\\ \\
+\textbf{开始状态转移函数：}\\
+q_{start} \quad \_ \quad \overbrace {\# \quad \cdots \quad \#   }^{k-1} \quad \rightarrow \quad \overbrace {r \_ r \_ \cdots \_ r}^k \_ q_{start}  \quad \overbrace {\_ \quad \_ \quad \cdots \quad \_}^k \quad \overbrace {r \quad r \quad \cdots \quad r}^k
+\end{array}$$&lt;/span&gt;&lt;!-- Has MathJax --&gt;
 </content>
     
     <summary type="html">
@@ -44,7 +205,7 @@
     <link href="http://yoursite.com/2016/03/03/%E5%8D%9A%E5%AE%A2%E7%9A%84%E5%BB%BA%E7%AB%8B/"/>
     <id>http://yoursite.com/2016/03/03/博客的建立/</id>
     <published>2016-03-03T14:30:50.000Z</published>
-    <updated>2016-03-11T01:41:28.536Z</updated>
+    <updated>2016-03-15T08:10:38.392Z</updated>
     
     <content type="html">&lt;p&gt;欢迎来到本博客，这是我建立的第一个博客！&lt;/p&gt;
 &lt;h2 id=&quot;博客的环境搭建&quot;&gt;&lt;a href=&quot;#博客的环境搭建&quot; class=&quot;headerlink&quot; title=&quot;博客的环境搭建&quot;&gt;&lt;/a&gt;博客的环境搭建&lt;/h2&gt;&lt;p&gt;安装Git（Git-2.6.2-64-bit）&lt;br&gt;安装Node.js（node-v4.2.1-x64）&lt;br&gt;安装MarkdownPad2&lt;/p&gt;
@@ -76,7 +237,9 @@
 &lt;p&gt;如果有出错了的话，就输入以下指令：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;eval `ssh-agent -s`&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;ssh-add&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;到了这一步，就可以添加SSH key到Github账户了。键入以下指令，拷贝Key（先拷贝了，等一下可以直接粘贴）：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;clip &amp;lt; ~/.ssh/id_rsa.pub&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;然后到Github里面，点击右上角的设置图标，在Settings sidebar那里，点击SSH keys。点击New SSH key，输入Title，作为这个key的描述，Key的内容就是刚刚拷贝的，直接粘贴就好（也可以文本打开以下文件：&lt;code&gt;C:\User\...\.ssh\id_rsa.pub&lt;/code&gt;复制粘贴）。最后点击Add SSH keys按钮完成添加。&lt;br&gt;键入以下命令测试是否设置成功：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;ssh -T git@github.com&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;如果成功，会有successfully authenticated提示，输入yes就可以了。&lt;br&gt;&lt;strong&gt;完成部署&lt;/strong&gt;&lt;br&gt;最后一步，键入指令进行发布：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;hexo g&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;hexo d&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;如果成功，会有successfully authenticated提示，输入yes就可以了。&lt;br&gt;&lt;strong&gt;完成部署&lt;/strong&gt;&lt;br&gt;找到配置文件中# Deployment一节，修改：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;type: github&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;repository: https://github.com/你的账号名/你的账号名.github.io.git&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;branch: master&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;最后一步，键入指令进行发布：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;hexo g&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;hexo d&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;如果出现hexo ERROR Deployer not found: github的错误，则将type由github改为git&lt;br&gt;安装：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;npm install hexo-deployer-git --save&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
 </content>
     
     <summary type="html">
