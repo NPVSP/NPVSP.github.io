@@ -5,26 +5,23 @@
  &amp; \ \textbf{原图灵机：} \qquad\qquad &amp; \textbf{转换后：}\quad\quad\\
 tape &amp;T &amp; TT=\{T\} \\ 
 alphabet &amp; A=\{\Gamma\} &amp; TA=\{\Gamma\_\Gamma, \quad \_  , \quad \# \}\\
-register &amp; R=\{Q\} &amp; TR=\{D_1\_D_2\_ \cdots D_k\_Q, \quad q_{start}, \quad q_{halt}\}\\
+register &amp; R=\{Q\} &amp; TR=\{D_0\_D_1\_ \cdots D_{k-1}\_Q, \quad q_{start}, \quad q_{halt}\} \qquad\qquad\qquad\qquad\qquad\qquad\\
 transition function &amp; F=\{\delta\} &amp; TF=\{\delta&apos;\}
-\\\\
-\end{array}
-\\ 
-
-\begin{array}{l }
-其中D_i = \{r, \quad l\}\quad (i=1 , \quad 2 , \quad  \cdots , \quad k)  \\
+\end{array}$$</span><!-- Has MathJax -->
+<span>$$\begin{array}{l }
+其中D_i = \{r, \quad l\}\quad (i=0 , \quad 1 , \quad  \cdots , \quad k-1)  \\
 k = |T|为图灵机的带数 \\\\
 \delta:\quad
-q \quad a_1 \quad a_2 \quad \cdots \quad a_k \quad \rightarrow \quad q&apos; \quad b_1 \quad b_2 \quad \cdots \quad b_k \quad d_1 \quad d_2 \quad \cdots \quad d_k \\
+q \quad a_0 \quad a_1 \quad \cdots \quad a_{k-1} \quad \rightarrow \quad q&apos; \quad b_0 \quad b_1 \quad \cdots \quad b_{k-1} \quad d_0 \quad d_1 \quad \cdots \quad d_{k-1} \\
 转换为\\
 \delta&apos;:\quad
-Dr_1\_Dr_2\_\cdots\_Dr_k\_q \quad Ta_1 \quad Ta_2 \quad \cdots \quad Ta_k \quad \rightarrow \quad 
-TQ \quad Tb_1 \quad Tb_2 \quad \cdots \quad Tb_k \quad Td_1 \quad Td_2 \quad \cdots \quad Td_k\\
+Dr_0\_Dr_1\_\cdots\_Dr_{k-1}\_q \quad Ta_0 \quad Ta_1 \quad \cdots \quad Ta_{k-1} \quad \rightarrow \quad 
+TQ \quad Tb_0 \quad Tb_1 \quad \cdots \quad Tb_{k-1} \quad Td_0 \quad Td_1 \quad \cdots \quad Td_{k-1}\\
 语句转换：\\
-Dr_i=\{r,\quad l\} \quad i=1,\quad 2, \quad\cdots , \quad k \\
+Dr_i=\{r,\quad l\} \quad i=0,\quad 1, \quad\cdots , \quad k-1 \\
 TQ=\left \{ 
 \begin{array}{l} 
-Dr_1\_Dr_2\_\cdots\_Dr_k\_q&apos; \qquad  \\ 
+Dr_0\_Dr_1\_\cdots\_Dr_{k-1}\_q&apos; \qquad  \\ 
 q_{halt} \qquad 
 \end{array} 
 当
@@ -81,22 +78,11 @@ d_i=s\\
 d_i=l
 \end{array} 
 \right .
-\\注意：\\
-生成的语句数目=\prod\limits_{i=1}^k|Dr_i| \cdot \prod\limits_{i=1}^k|Ta_i| \approx 2^kA^k
 
-\\ \\
+\\
 \\相关的\_或者\#符号转换函数：\\
-Dr_i=\{r,\quad l\} \quad i=1,\quad 2, \quad\cdots , \quad k \\
-TQ=\left \{ 
-\begin{array}{l} 
-Dr_1&apos;\_Dr_2&apos;\_\cdots\_Dr_k&apos;\_q&apos; \qquad  \\ 
-q_{halt} \qquad 
-\end{array} 
-当
-\begin{array}{l}   \qquad q&apos; \neq q_{halt}\\ 
- \qquad q&apos; = q_{halt}
-\end{array} 
-\right . \\
+Dr_i=\{r,\quad l\} \quad i=0,\quad 1, \quad\cdots , \quad k-1 \\
+TQ=Dr_0&apos;\_Dr_1&apos;\_\cdots\_Dr_{k-1}&apos;\_q \qquad  \\
 
 Ta_i= \left \{ 
 \begin{array}{l} 
@@ -156,12 +142,281 @@ Dr_i=l
 注意：\\
 (1)Ta_i不能全部取ta_i\\
 (2)如果与前面的语句相同，则删除\\
-(3)生成的语句数目=\prod\limits_{i=1}^k|Dr_i| \cdot (\prod\limits_{i=1}^k|Ta_i| -1 ) \approx 2^kA^k
+
 \\ \\
 \textbf{开始状态转移函数：}\\
 q_{start} \quad \_ \quad \overbrace {\# \quad \cdots \quad \#   }^{k-1} \quad \rightarrow \quad \overbrace {r \_ r \_ \cdots \_ r}^k \_ q_{start}  \quad \overbrace {\_ \quad \_ \quad \cdots \quad \_}^k \quad \overbrace {r \quad r \quad \cdots \quad r}^k
+
 \end{array}$$</span><!-- Has MathJax -->
-</div><a data-url="http://yoursite.com/2016/03/06/Deterministic-Turing-Machine-Simulator/" data-id="cilt86r7500014ceopqts20li" class="article-share-link">分享到</a><div class="tags"><a href="/tags/DTM/">DTM</a></div><div class="post-nav"><a href="/2016/03/03/博客的建立/" class="next">博客的建立</a></div></div></div></div><div class="pure-u-1-4"><div id="sidebar"><div class="widget"><form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="search" name="word" maxlength="20" placeholder="Search"/><input type="hidden" name="si" value="http://yoursite.com"/><input name="tn" type="hidden" value="bds"/><input name="cl" type="hidden" value="3"/><input name="ct" type="hidden" value="2097152"/><input name="s" type="hidden" value="on"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Computer/">Computer</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/DTM/" style="font-size: 15px;">DTM</a> <a href="/tags/blog/" style="font-size: 15px;">blog</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/03/06/Deterministic-Turing-Machine-Simulator/">Deterministic Turing Machine Simulator（确定型图灵机模拟器）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/03/博客的建立/">博客的建立</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://cstheory.stackexchange.com/" title="Theoretical Computer Science" target="_blank">Theoretical Computer Science</a><ul></ul><a href="http://mathoverflow.net/" title="mathoverflow" target="_blank">mathoverflow</a><ul></ul><a href="http://www.changhai.org/" title="卢昌海个人主页" target="_blank">卢昌海个人主页</a><ul></ul><a href="http://zhiqiang.org/blog/" title="阅微堂" target="_blank">阅微堂</a><ul></ul><a href="http://www.matrix67.com/blog/" title="matrix67" target="_blank">matrix67</a><ul></ul><a href="http://ramakrishnadas.cs.uchicago.edu/" title="GCT" target="_blank">GCT</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">夏葡的笔记本.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/jquery.min.js?v=0.0.0"></script><script type="text/javascript" src="/js/totop.js?v=0.0.0"></script><script type="text/javascript" src="/js/fancybox.pack.js?v=0.0.0"></script><script type="text/javascript" src="/js/jquery.fancybox.js?v=0.0.0"></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script type="text/javascript" src="/js/share.js?v=0.0.0"></script><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div>
+<span>$$\begin{array}{l} 
+\\空间复杂度分析：\\
+生成tape的数目：O(|T|) \\
+生成alphabet的数目：O(|A|^2) \\
+生成register的数目：O(2^k|Q|) \\
+单条transition function的生成数目： \\
+单条语句转换生成的语句数目=\prod\limits_{i=0}^{k-1}|Dr_i| \cdot \prod\limits_{i=0}^{k-1}|Ta_i| \approx 2^kA^k=O(2^kA^k)
+\\
+相关的\_或者\#符号生成的语句数目=\prod\limits_{i=0}^{k-1}|Dr_i| \cdot (\prod\limits_{i=0}^{k-1}|Ta_i| -1 ) \approx 2^kA^k=O(2^kA^k)
+\\空间复杂度分析：\\
+T(n)=O(t(n)) \quad 其中t(n)为原来图灵机的时间复杂度
+\end{array}\qquad\qquad\qquad\qquad\qquad\qquad$$</span><!-- Has MathJax -->
+<p><br></p>
+<p><strong>多字符图灵机（multiple alphabet TM）转01图灵机 （01 alphabet TM）</strong><br>原理：<br>　　读码-&gt;写码-&gt;移动-&gt;模拟<br><span>$$\begin{array}{l  l  l}
+ &amp; \ \textbf{原图灵机：} \qquad\qquad &amp; \textbf{转换后：}\quad\quad\\
+tape &amp;T &amp; TT=\{T\} \\ 
+alphabet &amp; A=\{\Gamma\} &amp; TA=\{0, \quad 1  , \quad \# \}\\
+register &amp; R=\{Q\} &amp; TR= \left \{\begin{array}{l} 在转换函数时加入\downarrow \\
+r \_ \{ 0, \cdots, c-1 \} \_ TQ_{ \{ 0,\cdots,c \} } \\\{ w,m \} \_ \{ 0, \cdots, c-1 \} \_ TQ \\ QQ \\ 
+q_{start}, \quad q_{halt}
+\end{array} \right \} \qquad\qquad\qquad\qquad\qquad\qquad\\
+transition function &amp; F=\{\delta\} &amp; TF=\{\delta&apos;\}
+\end{array}$$</span><!-- Has MathJax --></p>
+<span>$$\begin{array}{l }
+k = |T|为图灵机的带数 \\\\
+编码:\\
+将原来的字符集A中的除了\#外全部使用二进制编码，编码长度为c=\lceil \lg |A| \rceil \\
+\# \quad \rightarrow \quad \overbrace {\# \quad \cdots \quad \#   }^c \\
+a_i \quad \rightarrow \quad (a_ih_{c-1} \quad \cdots \quad a_ih_0   )_2 \quad 其中 
+a_ih_j = \left \{ 
+\begin{array}{l} 
+0  \\ 
+1 
+\end{array} 
+\right . 
+\quad \left ( 
+\begin{array}{l} 
+j=0 , \quad 1 , \quad  \cdots , \quad c-1 \\
+i=0 , \quad 1 , \quad  \cdots , \quad k-1 
+\end{array} \right )\\
+其他 \quad \rightarrow \quad \overbrace {0 \quad \cdots \quad 0   }^c\\
+\\  
+\delta:\quad
+q \quad a_0 \quad a_1 \quad \cdots \quad a_{k-1} \quad \rightarrow \quad q&apos; \quad b_0 \quad b_1 \quad \cdots \quad b_{k-1} \quad d_0 \quad d_1 \quad \cdots \quad d_{k-1} \\
+转换为\\
+读码操作\\
+r\_0\_TQ_0 \quad a_0h_{c-1} \quad \cdots \quad a_{k-1}h_{c-1} \quad \rightarrow \quad r\_1\_TQ_1 \quad a_0h_{c-1} \quad \cdots \quad a_{k-1}h_{c-1} \quad r \quad r \quad \cdots \quad r \\
+\cdots \\
+r\_c-2\_TQ_{c-2} \quad a_0h_1 \quad \cdots \quad a_{k-1}h_1 \quad \rightarrow \quad r\_c-1\_TQ_{c-1} \quad a_0h_1 \quad \cdots \quad a_{k-1}h_1 \quad r \quad r \quad \cdots \quad r \\
+r\_c-1\_TQ_{c-1} \quad a_0h_0 \quad \cdots \quad a_{k-1}h_0 \quad \rightarrow \quad w\_0\_TQ \quad a_0h_0 \quad \cdots \quad a_{k-1}h_0 \quad s \quad s \quad \cdots \quad s \\
+其中TQ_j=q\_x_{0,j}\_\cdots\_x_{k-1,j} \qquad
+\left \{ 
+\begin{array}{l} 
+x_{i,0}=0 \qquad  \\
+x_{i,j}=2 \cdot x_{i,j-1}+a_ih_{j-1} \qquad 
+\end{array} 
+当
+\begin{array}{l}   \qquad j=0 \\
+ \qquad j \neq 0
+\end{array} 
+\right . \\
+
+TQ=TQ_c\\
+(j=0 , \quad 1 , \quad  \cdots , \quad c, \quad i=0 , \quad 1 , \quad  \cdots , \quad k-1)\\
+可以在加入TR集合时有相同的删除，加入TF集合时有相同的删除\\
+写码操作：\\
+w\_0\_TQ \quad a_0h_0 \quad \cdots \quad a_{k-1}h_0 \quad \rightarrow \quad w\_1\_TQ \quad b_0h_0 \quad \cdots \quad b_{k-1}h_0 \quad l \quad l \quad \cdots \quad l \\
+\cdots \\
+w\_c-2\_TQ \quad a_0h_{c-2} \quad \cdots \quad a_{k-1}h_{c-2} \quad \rightarrow \quad w\_c-1\_TQ \quad b_0h_{c-1} \quad \cdots \quad b_{k-1}h_{c-1} \quad l \quad l \quad \cdots \quad l \\
+w\_c-1\_TQ \quad a_0h_{c-1} \quad \cdots \quad a_{k-1}h_{c-1} \quad \rightarrow \quad m\_0\_TQ \quad b_0h_{c-1} \quad \cdots \quad b_{k-1}h_{c-1} \quad s \quad s \quad \cdots \quad s \\
+移动操作\\
+m\_0\_TQ \quad A_{0,0} \quad \cdots \quad A_{k-1,0} \quad \rightarrow \quad m\_1\_TQ \quad A_{0,0} \quad \cdots \quad A_{k-1,0} \quad d_0 \quad d_1 \quad \cdots \quad d_{k-1} \\
+\cdots \\
+m\_c-2\_TQ \quad A_{0,c-2} \quad \cdots \quad A_{k-1,c-2} \quad \rightarrow \quad m\_c-1\_TQ \quad A_{0,c-2} \quad \cdots \quad A_{k-1,c-2} \quad d_0 \quad d_1 \quad \cdots \quad d_{k-1} \\
+m\_c-1\_TQ \quad A_{0,c-1} \quad \cdots \quad A_{k-1,c-1} \quad \rightarrow \quad QQ \quad A_{0,c-1} \quad \cdots \quad A_{k-1,c-1} \quad d_0 \quad d_1 \quad \cdots \quad d_{k-1} \\
+其中QQ=\left \{ 
+\begin{array}{l} 
+r\_0\_q&apos;\_ \overbrace {0\_0\_ \cdots \_0}^k \qquad  \\ \\
+q_{halt} \qquad 
+\end{array} 
+当
+\begin{array}{l}   \qquad q&apos; \neq q_{halt}\\ \\
+ \qquad q&apos; = q_{halt}
+\end{array} 
+\right . \\
+A_{i,j}=\left \{ 
+\begin{array}{l} 
+b_ih_{c-1-j}  \\ 
+b_ih_{c-1}\\
+\{0,1, \# \} \qquad 
+\end{array} 
+当
+\begin{array}{l}   
+\qquad d_i=r\\ 
+\qquad d_i=s\\
+\qquad d_i=l
+\end{array} \right . \\
+i=0 , \quad 1 , \quad  \cdots , \quad k-1\\
+j=0 , \quad 1 , \quad  \cdots , \quad c-1\\
+可以在QQ寄存器状态加入TR集合时有相同的删除 \\
+\\ \\
+\textbf{开始状态转移函数：}\\
+q_{start} \quad AA \quad \overbrace {\# \quad \cdots \quad \#   }^{k-1} \quad \rightarrow \quad r\_ 0 \_q_{start} \_ \overbrace {0 \_ 0 \_ \cdots \_ 0}^k   \quad AA  \quad \overbrace { \# \quad \# \quad \cdots \quad \# }^{k-1} \quad \overbrace {s \quad s \quad \cdots \quad s}^k \\
+其中AA= \{ 0,1, \# \} 
+\end{array}$$</span><!-- Has MathJax -->
+<span>$$\begin{array}{l}   
+\\空间复杂度分析：\\
+生成tape的数目：O(|T|) \\
+生成alphabet的数目：O(1) \\
+生成register的数目：\approx 3c|Q||A|^k=O(\lg|A||A|^k |Q|) \\
+单条transition function的生成数目： \\
+编码生成的语句数目\approx c=O(\lg|A|)\\
+写码生成的语句数目\approx c=O(\lg|A|)\\
+移动生成的语句数目\approx c \cdot 3^k=O(\lg|A| \cdot 3^k)\\
+\\时间复杂度分析：\\
+T(n)=3c \cdot t(n) =O(t(n))\quad 其中t(n)为原来图灵机的时间复杂度
+
+\end{array}\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad$$</span><!-- Has MathJax -->
+<p><br></p>
+<p><strong>多带图灵机（multiple tape TM）转单带图灵机 （one tape TM）</strong><br>原理：<br>　　先将带上的输入初始化，将输入按带数间隔分布，然后模拟多带图灵机操作。每一次模拟都先从初始位置扫描一遍，模拟操作，然后从操作位置返回初始位置。<br><span>$$\begin{array}{l  l  l}
+ &amp; \ \textbf{原图灵机：} \qquad\qquad &amp; \textbf{转换后：}\quad\quad\\
+tape &amp;T &amp; TT=\{单带\} \\ 
+alphabet &amp; A=\{\Gamma\} &amp; TA=\{A, \quad \_A  , \quad \_ \}\\
+register &amp; R=\{Q\} &amp; TR= \left \{\begin{array}{l} 在转换函数时加入\downarrow \\ 初始化操作的寄存器 \\
+r\{0,\cdots,k-1\}\_c_0\_\cdots\_c_{k-1}\_q\_A_0\_\cdots\_A_{k-1} \\
+w\{0,\cdots,k-1\}\_c_0\_\cdots\_c_{k-1}\_q\_a_0\_\cdots\_a_{k-1} \\ 
+F\_\{d0,\cdots,dk-1 \quad rd0,\cdots,rdk-1 \quad m0,\cdots,mk-1 \quad r0,\cdots,rk-1\}\\
+QQ \\ 
+q_{start}, \quad q_{halt}
+\end{array} \right \}\\
+transition function &amp; F=\{\delta\} &amp; TF=\{\delta&apos;\}
+\end{array}$$</span><!-- Has MathJax --></p>
+<span>$$\begin{array}{l }
+k = |T|为图灵机的带数 \\\\
+
+初始化：\\
+start \quad A \quad \rightarrow \quad move\_A \quad \_A \quad r \\
+move\_A \quad B \quad \rightarrow \quad move\_A \quad B  \quad r \\
+move\_A \quad \# \quad \rightarrow \quad copy\_A \quad \_ \quad r \\
+move\_A \quad \_ \quad \rightarrow \quad copy\_A \quad \_ \quad r \\
+
+copy\_A \quad \_C \quad \rightarrow \quad copy\_A \quad \_C \quad r \\
+copy\_A \quad \# \quad \rightarrow \quad fill\_0 \quad \_A \quad r \\
+\left . \begin{array}{l }
+fill\_0 \quad \# \quad \rightarrow \quad fill\_1 \quad \_ \# \quad r \\
+
+\cdots \\
+fill\_k-3 \quad \# \quad \rightarrow \quad fill\_k-2 \quad \_\# \quad r \\
+fill\_k-2 \quad \# \quad \rightarrow \quad rmov0 \quad \_ \# \quad s \\
+\end{array} \right \} 将后面的k-1个\#填充为\_\#\\
+
+rmov0 \quad \_A \quad \rightarrow \quad rmov0 \quad \_A \quad l \\
+rmov0 \quad \_ \quad \rightarrow \quad rmov1 \quad \_ \quad l \\
+rmov1 \quad A \quad \rightarrow \quad rmov1 \quad A \quad l \\
+rmov1 \quad \_A \quad \rightarrow \quad start \quad A \quad r \\
+start \quad \_ \quad \rightarrow \quad rcmov\_0 \quad \_ \quad r \qquad//已经移动完毕 \\
+\left . \begin{array}{l }
+rcmov\_0 \quad \_A \quad \rightarrow \quad rcmov\_1 \quad \_A \quad r \\
+\cdots \\
+rcmov\_k-2 \quad \_A \quad \rightarrow \quad rcmov\_k-1 \quad \_A \quad r \\
+rcmov\_k-1 \quad \_A \quad \rightarrow \quad re \quad \_A \quad r \\
+\end{array} \right \}跳过初始磁头位置\\
+re \quad \_A \quad \rightarrow \quad re \quad A \quad r \qquad//其他元素初始化 \\
+re \quad \# \quad \rightarrow \quad se \quad \# \quad s \\
+se \quad A \quad \rightarrow \quad se \quad A \quad l \\
+se \quad \_A \quad \rightarrow \quad se \quad \_A \quad l \\
+se \quad \_ \quad \rightarrow \quad s0\_\overbrace {1\_\cdots\_1}^{k个1}\_start\_\overbrace {\_\_\cdots\_\_}^{k个\_} \quad \_ \quad r \qquad //开始\\
+其中A=\{\Gamma\}, \quad B=\{ \Gamma -\{ \# \} \}, \quad C=\{ \Gamma \}\\
+
+\\
+\delta:\quad
+q \quad a_0 \quad a_1 \quad \cdots \quad a_{k-1} \quad \rightarrow \quad q&apos; \quad b_0 \quad b_1 \quad \cdots \quad b_{k-1} \quad d_0 \quad d_1 \quad \cdots \quad d_{k-1} \\
+转换为\\
+使用标志位c_i控制每条带上读写的模拟，当标志位为1时表示没有读写，为0时则相反
+c_i= \left \{ 
+\begin{array}{l} 
+0  \\ 
+1  
+\end{array} 
+\right . 
+\quad  对应\rightarrow \quad  
+A_i= \left \{  
+\begin{array}{l}   
+a_i\\
+\_
+\end{array} 
+\right . \quad
+其中i=0 , \quad 1 , \quad  \cdots , \quad k-1\\
+A=\{\Gamma\} \quad D=\{A,\_A\} \\
+//读 \\
+(1)当c_i中至少有一个不为0，表明还没有读取完毕 \\
+没有碰到带 &quot;\_&quot;元素 \\
+ri\_c_0\_\cdots\_c_{k-1}\_q\_A_0\_\cdots\_A_{k-1} \quad A \quad \rightarrow \quad r(i+1)\%k\_c0\_\cdots\_c_{k-1}\_q\_A_0\_\cdots\_A_{k-1} \quad A \quad r \qquad  \\
+碰到带 &quot;\_&quot;元素 \\
+当c_i=1时 \\
+ri\_c_0\_\cdots\_\widehat{1}^i\_\cdots\_c_{k-1}\_q\_A_0\_\cdots\_A_{k-1} \quad \_a_i \quad \rightarrow \quad r(i+1)\%k\_c_0\_\cdots\_\widehat{0}^i\_\cdots\_c_{k-1}\_q\_A_0\_\cdots\_\widehat{a_i}^i\_\cdots\_A_{k-1} \quad A \quad r \\
+当c_i=0时不可能碰到带&quot;\_&quot;元素，因为已经扫描过了 \\
+可以在加入TR集合时有相同的删除，加入TF集合时有相同的删除 \\ 
+(2)当\forall c_i=0，已经读取完毕，进入写操作 \\
+ri\_\overbrace{0\_\cdots\_0}^k\_q\_A_0\_\cdots\_A_{k-1} \quad A \quad \rightarrow \quad w(i-1+k)\%k\_\overbrace{1\_\cdots\_1}^k\_q\_a_0\_\cdots\_a_{k-1} \quad A \quad l \qquad  \\ 
+
+\\
+
+//写 \\
+(1)当c_i中至少有一个不为0，表明还没有读取完毕 \\
+没有碰到带 &quot;\_&quot;元素 \\
+wi\_c_0\_\cdots\_c_{k-1}\_q\_a_0\_\cdots\_a_{k-1} \quad A \quad \rightarrow \quad w(i-1+k)\%k\_c0\_\cdots\_c_{k-1}\_q\_a_0\_\cdots\_a_{k-1} \quad A \quad l \qquad  \\
+碰到带 &quot;\_&quot;元素 \\
+当c_i=1时 \\
+当 d_i=s时\\
+wi\_c_0\_\cdots\_\widehat{1}^i\_\cdots\_c_{k-1}\_q\_a_0\_\cdots\_a_{k-1} \quad \_a_i \quad \rightarrow \quad w(i-1+k)\%k\_c_0\_\cdots\_\widehat{0}^i\_\cdots\_c_{k-1}\_q\_a_0\_\cdots\_a_{k-1} \quad \_b_i \quad l \\
+当 d_i=d=\left \{  
+\begin{array}{l}   
+r\\
+l
+\end{array} 
+\right . 时 \quad 令d&apos;=\left \{  
+\begin{array}{l}   
+l\\
+r
+\end{array} 
+\right . \\
+wi\_c_0\_\cdots\_\widehat{1}^i\_\cdots\_c_{k-1}\_q\_a_0\_\cdots\_a_{k-1} \quad \_a_i \quad \rightarrow \quad F\_d0 \quad b_i \quad d \\
+令F=w(i-1+k)\%k\_c_0\_\cdots\_\widehat{0}^i\_\cdots\_c_{k-1}\_q\_a_0\_\cdots\_a_{k-1}\\
+F\_d0 \quad D \quad \rightarrow \quad F\_d1 \quad D \quad d \\
+\cdots \\
+F\_dk-2 \quad D \quad \rightarrow \quad F\_dk-1 \quad D \quad d \\
+F\_dk-1 \quad A \quad \rightarrow \quad F\_rd0 \quad \_A \quad d&apos; \\
+F\_rd0 \quad D \quad \rightarrow \quad F\_rd1 \quad D \quad d&apos; \\
+\cdots \\
+F\_rdk-2 \quad D \quad \rightarrow \quad F\_rdk-1 \quad D \quad d&apos; \\
+F\_rdk-1 \quad b_i \quad \rightarrow \quad F \quad b_i \quad l \\
+特殊情况，当d_i=l时，如果模拟的是双边图灵机有可能会冲掉原来的输入，需要使用下面操作调整 \\
+F\_di \quad \_ \quad \rightarrow \quad F\_m0 \quad \# \quad l \\
+F\_m0 \quad A \quad \rightarrow \quad F\_m1 \quad \# \quad l \\
+\cdots \\
+F\_mk-2 \quad A \quad \rightarrow \quad F\_mk-1 \quad \#  \quad l \\
+F\_mk-1 \quad A \quad \rightarrow \quad F\_r0 \quad \_ \quad r \\
+F\_r0 \quad \# \quad \rightarrow \quad F\_r1 \quad \# \quad r \\
+\cdots \\
+F\_rk-2 \quad \# \quad \rightarrow \quad F\_rk-1 \quad \# \quad r \\
+F\_rk-1 \quad \# \quad \rightarrow \quad F\_di \quad \# \quad s \\
+当c_i = 0时 \\
+wi\_c_0\_\cdots\_c_{k-1}\_q\_a_0\_\cdots\_a_{k-1} \quad \_A \quad \rightarrow \quad w(i-1+k)\%k\_c_0\_\cdots\_c_{k-1}\_q\_a_0\_\cdots\_a_{k-1} \quad \_A \quad l \\
+(2)当\forall c_i=0，已经写完毕，返回初始位置&quot;\_&quot;，开始新的扫描 \\
+wi\_\overbrace{0\_\cdots\_0}^k\_q\_a_0\_\cdots\_a_{k-1} \quad D \quad \rightarrow \quad w(i-1+k)\%k\_\overbrace{0\_\cdots\_0}^k\_q\_a_0\_\cdots\_a_{k-1} \quad D \quad l \qquad  \\ 
+wk-1\_\overbrace{0\_\cdots\_0}^k\_q\_a_0\_\cdots\_a_{k-1} \quad \_ \quad \rightarrow \quad QQ \quad \_ \quad r \qquad  \\ 
+其中QQ=\left \{ 
+\begin{array}{l} 
+r0\_\overbrace{1\_\cdots\_1}^k\_q&apos;\_\overbrace{\_\_\cdots\_\_}^{k个\_} \qquad  \\ \\
+q_{halt} \qquad 
+\end{array} 
+当
+\begin{array}{l}   \qquad q&apos; \neq q_{halt}\\ \\
+ \qquad q&apos; = q_{halt}
+\end{array} 
+\right . \\
+\end{array}$$</span><!-- Has MathJax -->
+<span>$$\begin{array}{l} 
+\\空间复杂度分析：\\
+生成tape的数目：O(1) \\
+生成alphabet的数目：2|A|+1=O(|A|) \\
+生成register的数目：\approx k|Q| \cdot 2^k + k|Q|\cdot 2^k \cdot4k=O(k^22^k|Q|) \\
+单条transition function的生成数目： \\
+读取生成的语句数目\approx k \cdot 2^k \cdot |A|=O(k2^k|A|)\\
+写入生成的语句数目\approx k \cdot 2^k \cdot |A| + k \cdot 2^k \cdot 4k \cdot |A|=O(k^2 2^k|A|)\\
+\\时间复杂度分析：\\
+T(n)=kn \cdot n + 2kt(n) \cdot t(n)=O(t^2(n)) \quad 其中t(n)为原来图灵机的时间复杂度
+\end{array} \qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad$$</span><!-- Has MathJax --></div><a data-url="http://yoursite.com/2016/03/06/Deterministic-Turing-Machine-Simulator/" data-id="cin7c8sza0005oceokh7k3dfc" class="article-share-link">分享到</a><div class="tags"><a href="/tags/DTM/">DTM</a></div><div class="post-nav"><a href="/2016/04/19/空档接龙中一次最多可以移动多少张牌？/" class="pre">空档接龙中一次最多可以移动多少张牌？</a><a href="/2016/03/03/博客的建立/" class="next">博客的建立</a></div></div></div></div><div class="pure-u-1-4"><div id="sidebar"><div class="widget"><form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="search" name="word" maxlength="20" placeholder="Search"/><input type="hidden" name="si" value="http://yoursite.com"/><input name="tn" type="hidden" value="bds"/><input name="cl" type="hidden" value="3"/><input name="ct" type="hidden" value="2097152"/><input name="s" type="hidden" value="on"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Computer/">Computer</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/math/">math</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/空档接龙/" style="font-size: 15px;">空档接龙</a> <a href="/tags/归纳法/" style="font-size: 15px;">归纳法</a> <a href="/tags/blog/" style="font-size: 15px;">blog</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/DTM/" style="font-size: 15px;">DTM</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/04/19/空档接龙中一次最多可以移动多少张牌？/">空档接龙中一次最多可以移动多少张牌？</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/06/Deterministic-Turing-Machine-Simulator/">Deterministic Turing Machine Simulator（确定型图灵机模拟器）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/03/博客的建立/">博客的建立</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://cstheory.stackexchange.com/" title="Theoretical Computer Science" target="_blank">Theoretical Computer Science</a><ul></ul><a href="http://mathoverflow.net/" title="mathoverflow" target="_blank">mathoverflow</a><ul></ul><a href="http://www.changhai.org/" title="卢昌海个人主页" target="_blank">卢昌海个人主页</a><ul></ul><a href="http://zhiqiang.org/blog/" title="阅微堂" target="_blank">阅微堂</a><ul></ul><a href="http://www.matrix67.com/blog/" title="matrix67" target="_blank">matrix67</a><ul></ul><a href="http://ramakrishnadas.cs.uchicago.edu/" title="GCT" target="_blank">GCT</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">夏葡的笔记本.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/jquery.min.js?v=0.0.0"></script><script type="text/javascript" src="/js/totop.js?v=0.0.0"></script><script type="text/javascript" src="/js/fancybox.pack.js?v=0.0.0"></script><script type="text/javascript" src="/js/jquery.fancybox.js?v=0.0.0"></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script type="text/javascript" src="/js/share.js?v=0.0.0"></script><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div>
 <!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
